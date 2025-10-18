@@ -4098,8 +4098,15 @@ def get_user_by_email(email):
                 'created_at': requester.created_at.isoformat()
             }
         })
-    
-    return jsonify({'error': 'User not found'}), 404
+
+
+# Health endpoint for quick checks
+@app.route('/health')
+def health():
+    return jsonify({'status': 'ok', 'service': 'RAKTDHARA Backend'})
+
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Allow running with a custom PORT env var (useful for local testing)
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
