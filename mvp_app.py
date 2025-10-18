@@ -16,10 +16,24 @@ from pathlib import Path
 _env_path = Path(__file__).resolve().parent / '.env'
 load_dotenv(dotenv_path=_env_path, override=True)
 app = Flask(__name__, static_folder='.', static_url_path='')
-CORS(app)
 
-# Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mvp_blood_bank.db'
+# Configure CORS to allow requests from the deployed frontend
+# FRONTEND_URL: optional env var you can set to your Vercel domain (https://your-site.vercel.app)
+# VERCEL may set VERCEL_URL (without scheme) for preview; we accept either.
+frontend_url = os.getenv('FRONTEND_URL') or os.getenv('VERCEL_URL')
+if frontend_url:
+    if not frontend_url.startswith('http'):
+        frontend_url = f"https://{frontend_url}"
+    # allow localhost for local testing as well
+    cors_origins = [frontend_url, 'http://127.0.0.1:5000', 'http://localhost:5000']
+    CORS(app, origins=cors_origins)
+else:
+    # fallback: allow all origins (useful until you set FRONTEND_URL in production)
+    CORS(app)
+
+# Database configuration - use DATABASE_URL in production (Render/Heroku style)
+# If not set, fall back to a local sqlite file for development/testing.
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///mvp_blood_bank.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize database
