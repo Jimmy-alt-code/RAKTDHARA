@@ -187,3 +187,22 @@ The application is built as a single-file Flask application for simplicity and e
 - Default admin account is created automatically
 - All data is stored in SQLite database
 - Application runs on port 5000 by default
+
+## 🚀 Deployment (Backend on Render + Frontend on Vercel)
+
+Recommended quick path:
+
+1. Backend — Render (free tier)
+   - In the Render dashboard, create a new Web Service and connect your GitHub repo `Jimmy-alt-code/RAKTDHARA`.
+   - Build command: `pip install -r requirements.txt`
+   - Start command: `gunicorn mvp_app:app --bind 0.0.0.0:$PORT`
+   - Add environment variables in Render for any secrets (SMTP, OPENAI_API_KEY, etc.).
+
+2. Frontend — Vercel (static)
+   - From your project root run `vercel --prod --name RAKTDHARA` after installing and logging in with the Vercel CLI.
+   - Vercel will host the static `.html` files. Configure the frontend to call the Render backend URL for API requests.
+
+Notes:
+- Replace local SQLite with a managed DB for production if you need persistence across deploys.
+- Add CORS origins in `mvp_app.py` to allow your Vercel domain to call the API.
+

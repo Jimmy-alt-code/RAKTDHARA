@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: RAKTDHARA-backend
+    env: python
+    plan: free
+    branch: master
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn mvp_app:app --bind 0.0.0.0:$PORT
+    autoDeploy: true
