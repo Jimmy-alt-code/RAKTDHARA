@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug NGO Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .result { margin: 10px 0; padding: 10px; background: #f5f5f5; }
+        .error { background: #ffebee; color: #c62828; }
+        .success { background: #e8f5e8; color: #2e7d32; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Debug NGO Dashboard</h1>
+    
+    <div class="test-section">
+        <h2>API Connection Test</h2>
+        <button onclick="testConnection()">Test API Connection</button>
+        <div id="connectionResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Statistics Test</h2>
+        <button onclick="testStatistics()">Get Statistics</button>
+        <div id="statisticsResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Dashboard Data Test</h2>
+        <button onclick="testDashboard()">Get Dashboard Data</button>
+        <div id="dashboardResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Update Statistics Test</h2>
+        <button onclick="testUpdateStats()">Update Statistics Display</button>
+        <div id="updateResult" class="result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        
+        async function testConnection() {
+            const result = document.getElementById('connectionResult');
+            try {
+                result.innerHTML = 'Testing connection...';
+                const response = await fetch(`${API_BASE}/ngo/statistics`);
+                result.innerHTML = `Connection successful! Status: ${response.status}`;
+                result.className = 'result success';
+            } catch (error) {
+                result.innerHTML = `Connection failed: ${error.message}`;
+                result.className = 'result error';
+            }
+        }
+        
+        async function testStatistics() {
+            const result = document.getElementById('statisticsResult');
+            try {
+                result.innerHTML = 'Fetching statistics...';
+                const response = await fetch(`${API_BASE}/ngo/statistics`);
+                const data = await response.json();
+                result.innerHTML = `Statistics: ${JSON.stringify(data, null, 2)}`;
+                result.className = 'result success';
+            } catch (error) {
+                result.innerHTML = `Error: ${error.message}`;
+                result.className = 'result error';
+            }
+        }
+        
+        async function testDashboard() {
+            const result = document.getElementById('dashboardResult');
+            try {
+                result.innerHTML = 'Fetching dashboard data...';
+                const response = await fetch(`${API_BASE}/ngo/dashboard`);
+                const data = await response.json();
+                result.innerHTML = `Dashboard data: ${JSON.stringify(data, null, 2)}`;
+                result.className = 'result success';
+            } catch (error) {
+                result.innerHTML = `Error: ${error.message}`;
+                result.className = 'result error';
+            }
+        }
+        
+        function testUpdateStats() {
+            const result = document.getElementById('updateResult');
+            try {
+                // Simulate the statistics update
+                const stats = {
+                    total_requests: 8,
+                    pending_requests: 0,
+                    approved_requests: 6,
+                    rejected_requests: 2
+                };
+                
+                // Create test elements and update them directly
+                const testDiv = document.createElement('div');
+                testDiv.innerHTML = `
+                    <div>Total: <span id="testTotal">${stats.total_requests}</span></div>
+                    <div>Pending: <span id="testPending">${stats.pending_requests}</span></div>
+                    <div>Approved: <span id="testApproved">${stats.approved_requests}</span></div>
+                    <div>Rejected: <span id="testRejected">${stats.rejected_requests}</span></div>
+                `;
+                
+                result.innerHTML = `Statistics update test successful!<br>${testDiv.innerHTML}`;
+                result.className = 'result success';
+            } catch (error) {
+                result.innerHTML = `Error: ${error.message}`;
+                result.className = 'result error';
+            }
+        }
+        
+        // Auto-run tests on page load
+        window.onload = function() {
+            console.log('Debug page loaded');
+            testConnection();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,3056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Check Availability - RAKT DHARA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Cache bust: Enhanced button styles v2 -->
+  <style>
+    :root {
+      --primary: #e60023;
+      --secondary: #1976d2;
+      --background: #f6f8fa;
+      --surface: #fff;
+      --text-main: #222;
+      --text-light: #fff;
+      --text-secondary: #1976d2;
+      --error: #d32f2f;
+      --success: #43a047;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --spacing: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-image: url('avail.png');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: var(--text-main);
+    }
+
+    /* Page Header */
+    .page-header {
+      background: #ffffff;
+      color: #111;
+      padding: 28px 0 24px 0;
+      text-align: center;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.04);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    /* remove old shimmer overlay */
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-content h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--primary);
+      animation: fadeInUp 0.6s ease-out;
+      text-shadow: none;
+    }
+
+    .header-content p {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      opacity: 0.8;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header-nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease-out 0.4s both;
+    }
+
+    .nav-link {
+      color: #333;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #e6e8eb;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav-link:hover::before {
+      left: 100%;
+    }
+
+    .nav-link:hover {
+      background: #f6f8fa;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 6px 18px rgba(230,0,35,0.25);
+    }
+
+    .dashboard-btn {
+      background: #111;
+      color: #fff;
+      border: 1px solid #111;
+    }
+
+    .dashboard-btn:hover {
+      background: #000;
+      border-color: #000;
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 50px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .page-title h1 {
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      font-weight: 700;
+    }
+
+    .page-title p {
+      font-size: 1.2rem;
+      color: #555;
+      font-weight: 500;
+    }
+
+    /* Search Section */
+    .search-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .search-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(230, 0, 35, 0.1);
+    }
+
+    .search-btn {
+      background: linear-gradient(135deg, var(--primary), #c41e3a) !important;
+      color: var(--text-light) !important;
+      padding: 14px 32px !important;
+      border: none !important;
+      border-radius: 25px !important;
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      justify-self: start !important;
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3) !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+
+    .search-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .search-btn:hover::before {
+      left: 100%;
+    }
+
+    .search-btn:hover {
+      background: linear-gradient(135deg, #c41e3a, #b3001c) !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 8px 25px rgba(230, 0, 35, 0.4) !important;
+    }
+
+    .search-btn:active {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3) !important;
+    }
+
+    /* Results Section */
+    .results-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .results-count {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .filter-options {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .filter-btn {
+      padding: 10px 20px;
+      border: 2px solid #e0e0e0;
+      background: linear-gradient(135deg, var(--surface), #f8f9fa);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .filter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(230, 0, 35, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .filter-btn:hover::before {
+      left: 100%;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--primary), #c41e3a);
+      color: var(--text-light);
+      border-color: var(--primary);
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+    }
+
+    .filter-btn.active::before {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: linear-gradient(135deg, #fff5f5, #ffeaea);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.2);
+    }
+
+    .filter-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Donor Cards */
+    .donors-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .donor-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(230, 0, 35, 0.2);
+      border-radius: var(--radius);
+      padding: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .donor-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .donor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .donor-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .availability-badge {
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .availability-badge.available {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .availability-badge.unavailable {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .availability-badge.waiting {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .donor-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #666;
+    }
+
+    .detail-item i {
+      color: var(--primary);
+      width: 16px;
+    }
+
+    .donor-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .action-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .action-btn:hover::before {
+      left: 100%;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .action-btn:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-contact, .action-btn.btn-contact {
+      background: linear-gradient(135deg, var(--secondary), #1565c0) !important;
+      color: var(--text-light) !important;
+      border: none !important;
+      padding: 12px 20px !important;
+      border-radius: 12px !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3) !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+
+    .btn-contact::before, .action-btn.btn-contact::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-contact:hover::before, .action-btn.btn-contact:hover::before {
+      left: 100%;
+    }
+
+    .btn-contact:hover, .action-btn.btn-contact:hover {
+      background: linear-gradient(135deg, #1565c0, #0d47a1) !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 8px 25px rgba(25, 118, 210, 0.4) !important;
+    }
+
+    .btn-contact:active, .action-btn.btn-contact:active {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3) !important;
+    }
+
+    .btn-outreach, .action-btn.btn-outreach {
+      background: linear-gradient(135deg, #ff6b35, #e55a2b) !important;
+      color: var(--text-light) !important;
+      border: none !important;
+      padding: 12px 20px !important;
+      border-radius: 12px !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3) !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+
+    .btn-outreach::before, .action-btn.btn-outreach::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-outreach:hover::before, .action-btn.btn-outreach:hover::before {
+      left: 100%;
+    }
+
+    .btn-outreach:hover, .action-btn.btn-outreach:hover {
+      background: linear-gradient(135deg, #e55a2b, #d84315) !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4) !important;
+    }
+
+    .btn-outreach:active, .action-btn.btn-outreach:active {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3) !important;
+    }
+
+    .btn-request, .action-btn.btn-request {
+      background: linear-gradient(135deg, var(--primary), #c41e3a) !important;
+      color: var(--text-light) !important;
+      border: none !important;
+      padding: 12px 20px !important;
+      border-radius: 12px !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3) !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+
+    .btn-request::before, .action-btn.btn-request::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-request:hover::before, .action-btn.btn-request:hover::before {
+      left: 100%;
+    }
+
+    .btn-request:hover, .action-btn.btn-request:hover {
+      background: linear-gradient(135deg, #c41e3a, #b3001c) !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 8px 25px rgba(230, 0, 35, 0.4) !important;
+    }
+
+    .btn-request:active, .action-btn.btn-request:active {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3) !important;
+    }
+
+    .btn-disabled {
+      background: linear-gradient(135deg, #e0e0e0, #d0d0d0);
+      color: #999;
+      cursor: not-allowed;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      opacity: 0.6;
+    }
+
+    .btn-disabled:hover {
+      transform: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Loading State */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* No Results */
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+    }
+
+    .no-results i {
+      font-size: 4rem;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
+
+    /* Smart Filters Section */
+    .smart-filters-section {
+      margin-bottom: 40px;
+    }
+
+    .smart-filters-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .smart-filters-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .filter-icon {
+      color: var(--primary);
+      font-size: 1.2rem;
+      transform: rotate(180deg);
+    }
+
+    .smart-filters-header h2 {
+      color: #2d3748;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .filters-row {
+      display: flex;
+      gap: 20px;
+      align-items: end;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #2d3748;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .blood-icon {
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .distance-icon {
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .availability-icon {
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .filter-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .filter-select {
+      width: 100%;
+      padding: 12px 40px 12px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background: white;
+      color: #2d3748;
+      font-size: 0.9rem;
+      appearance: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(230, 0, 35, 0.1);
+    }
+
+    .dropdown-icon {
+      position: absolute;
+      right: 12px;
+      color: var(--primary);
+      font-size: 0.8rem;
+      pointer-events: none;
+    }
+
+    .car-icon {
+      position: absolute;
+      left: 12px;
+      color: var(--primary);
+      font-size: 0.8rem;
+      pointer-events: none;
+    }
+
+    .lightning-icon {
+      position: absolute;
+      left: 12px;
+      color: #f59e0b;
+      font-size: 0.8rem;
+      pointer-events: none;
+    }
+
+    .find-match-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      min-width: 180px;
+      justify-content: center;
+    }
+
+    .find-match-btn:hover {
+      background: #b3001c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+    }
+
+    .find-match-btn i {
+      font-size: 1rem;
+    }
+
+    /* Search Tabs */
+    .search-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    .tab-btn {
+      padding: 12px 24px;
+      border: none;
+      background: transparent;
+      color: #666;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-btn:hover {
+      color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Enhanced Donor Cards - Matching Image Design */
+    .donor-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+      border-left: 4px solid #4CAF50;
+    }
+
+    .donor-card-header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      gap: 15px;
+    }
+
+    .donor-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .donor-info {
+      flex: 1;
+    }
+
+    .donor-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 4px;
+    }
+
+    .donor-details {
+      font-size: 0.9rem;
+      color: #718096;
+      margin-bottom: 2px;
+    }
+
+    .donor-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .availability-badge {
+      background: #4CAF50;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .distance-info {
+      color: #718096;
+      font-size: 0.9rem;
+    }
+
+    .donor-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 20px;
+      background: #f8f9fa;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: #718096;
+      font-weight: 500;
+    }
+
+    .donor-actions {
+      background: #2d3748;
+      padding: 15px 20px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .btn-contact {
+      background: linear-gradient(135deg, var(--primary), #c41e3a);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      flex: 1;
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-contact::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-contact:hover::before {
+      left: 100%;
+    }
+
+    .btn-contact:hover {
+      background: linear-gradient(135deg, #c41e3a, #b3001c);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(230, 0, 35, 0.4);
+    }
+
+    .btn-contact:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+    }
+
+    .btn-outreach {
+      background: linear-gradient(135deg, #ff6b35, #e55a2b);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      flex: 1;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-outreach::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-outreach:hover::before {
+      left: 100%;
+    }
+
+    .btn-outreach:hover {
+      background: linear-gradient(135deg, #e55a2b, #d84315);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    }
+
+    .btn-outreach:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    }
+
+    .btn-profile {
+      background: linear-gradient(135deg, #ffffff, #f8f9fa);
+      color: #2d3748;
+      border: 2px solid #e2e8f0;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      flex: 1;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-profile::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(230, 0, 35, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-profile:hover::before {
+      left: 100%;
+    }
+
+    .btn-profile:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: linear-gradient(135deg, #fff5f5, #ffeaea);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(230, 0, 35, 0.2);
+    }
+
+    .btn-profile:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      color: #2d3748;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #718096;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .avatar-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .profile-info h3 {
+      margin: 0 0 5px 0;
+      color: #2d3748;
+    }
+
+    .profile-email, .profile-phone {
+      margin: 2px 0;
+      color: #718096;
+      font-size: 0.9rem;
+    }
+
+    .profile-details {
+      margin-bottom: 20px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    .detail-value {
+      color: #2d3748;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    .modal-actions .btn-contact,
+    .modal-actions .btn-profile {
+      flex: 1;
+    }
+
+    /* Outreach Modal Styles */
+    .outreach-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+
+    .outreach-modal-content {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .outreach-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid rgba(230, 0, 35, 0.1);
+    }
+
+    .outreach-modal-header h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .outreach-close {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #999;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .outreach-close:hover {
+      color: var(--primary);
+    }
+
+    .outreach-form-group {
+      margin-bottom: 20px;
+    }
+
+    .outreach-form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .outreach-form-group input,
+    .outreach-form-group textarea,
+    .outreach-form-group select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .outreach-form-group input:focus,
+    .outreach-form-group textarea:focus,
+    .outreach-form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(230, 0, 35, 0.1);
+    }
+
+    .outreach-form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .outreach-templates {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .template-btn {
+      padding: 12px 18px;
+      border: 2px solid #e0e0e0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 249, 250, 0.9));
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .template-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(230, 0, 35, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .template-btn:hover::before {
+      left: 100%;
+    }
+
+    .template-btn:hover {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, rgba(230, 0, 35, 0.1), rgba(255, 245, 245, 0.9));
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.2);
+    }
+
+    .template-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .outreach-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: flex-end;
+      margin-top: 25px;
+    }
+
+    .btn-send-outreach {
+      background: linear-gradient(135deg, var(--primary), #c41e3a);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-send-outreach::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-send-outreach:hover::before {
+      left: 100%;
+    }
+
+    .btn-send-outreach:hover {
+      background: linear-gradient(135deg, #c41e3a, #b3001c);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(230, 0, 35, 0.4);
+    }
+
+    .btn-send-outreach:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+    }
+
+    .btn-cancel-outreach {
+      background: linear-gradient(135deg, #6c757d, #5a6268);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-cancel-outreach::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-cancel-outreach:hover::before {
+      left: 100%;
+    }
+
+    .btn-cancel-outreach:hover {
+      background: linear-gradient(135deg, #5a6268, #495057);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+    }
+
+    .btn-cancel-outreach:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    }
+
+    /* Show More Results Button */
+    .show-more-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      padding: 20px;
+    }
+
+    .show-more-btn {
+      background: linear-gradient(135deg, var(--primary), #c41e3a);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .show-more-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .show-more-btn:hover::before {
+      left: 100%;
+    }
+
+    .show-more-btn:hover {
+      background: linear-gradient(135deg, #c41e3a, #b3001c);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(230, 0, 35, 0.4);
+    }
+
+    .show-more-btn:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+    }
+
+    .show-more-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+      background: linear-gradient(135deg, #999, #777);
+    }
+
+    .show-more-btn:disabled:hover {
+      transform: none;
+      box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+    }
+
+    .show-more-btn i {
+      font-size: 1.1rem;
+    }
+
+    /* Search Results Header */
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .page-title h1 {
+        font-size: 2rem;
+      }
+
+      .search-form {
+        grid-template-columns: 1fr;
+      }
+
+      .smart-filters-card {
+        padding: 20px;
+      }
+
+      .filters-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .filter-group {
+        min-width: auto;
+      }
+
+      .find-match-btn {
+        width: 100%;
+        min-width: auto;
+      }
+
+      .search-tabs {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .tab-btn {
+        text-align: center;
+        border-bottom: none;
+        border-left: 3px solid transparent;
+      }
+
+      .tab-btn.active {
+        border-left-color: var(--primary);
+        border-bottom-color: transparent;
+      }
+
+      .results-header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .filter-options {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+    }
+
+    /* Footer Styles */
+    .footer {
+      background: #8f8f8f;
+      color: #fff;
+      padding: 40px 0 20px 0;
+      margin-top: 60px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .footer-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-icon {
+      font-size: 1.5rem;
+      color: #e60023;
+    }
+
+    .footer-logo h3 {
+      color: #e60023;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .footer-description {
+      color: #1976d2;
+      line-height: 1.6;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #e60023;
+      color: #fff;
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #b3001c;
+      transform: translateY(-2px);
+    }
+
+    .footer-title {
+      color: #e60023;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-link {
+      color: #1976d2;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-link:hover {
+      color: #fff;
+    }
+
+    .footer-link::before {
+      content: "■";
+      font-size: 0.6rem;
+      color: #e60023;
+    }
+
+    .footer-contact {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1976d2;
+      font-size: 0.95rem;
+    }
+
+    .contact-item i {
+      color: #e60023;
+      width: 16px;
+      text-align: center;
+    }
+
+    .newsletter-description {
+      color: #1976d2;
+      line-height: 1.6;
+      margin: 0 0 20px 0;
+      font-size: 0.95rem;
+    }
+
+    .newsletter-form {
+      margin-top: 10px;
+    }
+
+    .newsletter-input-group {
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      background: #fff;
+      color: #333;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .newsletter-input::placeholder {
+      color: #999;
+    }
+
+    .newsletter-btn {
+      background: #e60023;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .newsletter-btn:hover {
+      background: #b3001c;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+    }
+
+    .footer-divider {
+      height: 1px;
+      background: #999;
+      margin-bottom: 20px;
+    }
+
+    .footer-copyright {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .legal-link {
+      color: #999;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .legal-link:hover {
+      color: #fff;
+    }
+
+    /* Footer Responsive Design */
+    @media (max-width: 768px) {
+      .footer-main {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .footer-copyright {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+      
+      .footer-legal {
+        justify-content: center;
+      }
+      
+      .newsletter-input-group {
+        flex-direction: column;
+      }
+      
+      .newsletter-btn {
+        border-radius: 0 0 8px 8px;
+      }
+      
+      .newsletter-input {
+        border-radius: 8px 8px 0 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer {
+        padding: 30px 0 15px 0;
+      }
+      
+      .footer-container {
+        padding: 0 15px;
+      }
+      
+      .footer-main {
+        gap: 25px;
+      }
+      
+      .footer-title {
+        font-size: 1rem;
+      }
+      
+      .footer-description,
+      .newsletter-description {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>🩸 RAKT DHARA</h1>
+      <p>Blood Availability Checker</p>
+      <div class="header-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/check_availability.html" class="nav-link active">Check Availability</a>
+        <a href="/success_stories.html" class="nav-link">Success Stories</a>
+        <a href="/user-dashboard" class="nav-link dashboard-btn">Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-title">
+      <h1>Check Donor Availability</h1>
+      <p>Find available blood donors in your area</p>
+    </div>
+
+    <!-- Smart Filters Section -->
+    <section class="smart-filters-section">
+      <div class="smart-filters-card">
+        <div class="smart-filters-header">
+          <i class="fas fa-filter filter-icon"></i>
+          <h2>Smart Filters</h2>
+        </div>
+        
+        <div class="filters-row">
+          <!-- Blood Type Filter -->
+          <div class="filter-group">
+            <div class="filter-label">
+              <i class="fas fa-tint blood-icon"></i>
+              <span>Blood Type</span>
+            </div>
+            <div class="filter-input-wrapper">
+              <select id="requiredBloodType" name="requiredBloodType" class="filter-select" required>
+                <option value="">Select Blood Type</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-" selected>O- (Universal Donor)</option>
+              </select>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </div>
+          </div>
+
+          <!-- Distance Filter -->
+          <div class="filter-group">
+            <div class="filter-label">
+              <i class="fas fa-paper-plane distance-icon"></i>
+              <span>Distance</span>
+            </div>
+            <div class="filter-input-wrapper">
+              <select id="maxDistance" name="maxDistance" class="filter-select">
+                <option value="5">Within 5 miles</option>
+                <option value="10">Within 10 miles</option>
+                <option value="25" selected>Within 25 miles</option>
+                <option value="50">Within 50 miles</option>
+                <option value="100">Within 100 miles</option>
+              </select>
+              <i class="fas fa-car car-icon"></i>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </div>
+          </div>
+
+          <!-- Availability Filter -->
+          <div class="filter-group">
+            <div class="filter-label">
+              <i class="fas fa-clock availability-icon"></i>
+              <span>Availability</span>
+            </div>
+            <div class="filter-input-wrapper">
+              <select id="availabilityFilter" name="availabilityFilter" class="filter-select">
+                <option value="Available" selected>Available Now</option>
+                <option value="All">All Donors</option>
+                <option value="Busy">Busy</option>
+              </select>
+              <i class="fas fa-bolt lightning-icon"></i>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </div>
+          </div>
+
+          <!-- Search Button -->
+          <button type="submit" class="find-match-btn" onclick="handleSmartSearch()">
+            <i class="fas fa-search"></i>
+            <span>Find Perfect Match</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section" style="display: none;">
+      <h2 style="margin-bottom: 20px; color: var(--primary);">Intelligent Donor Search</h2>
+      
+      <!-- Search Tabs -->
+      <div class="search-tabs">
+        <button class="tab-btn active" onclick="switchTab('intelligent')">Smart Search</button>
+        <button class="tab-btn" onclick="switchTab('basic')">Basic Search</button>
+        <button class="tab-btn" onclick="switchTab('donor')">Find Donor</button>
+      </div>
+
+      <!-- Intelligent Search Tab -->
+      <div id="intelligentTab" class="tab-content active">
+        <form class="search-form" id="intelligentSearchForm">
+          <div class="form-group">
+            <label for="requiredBloodType">Required Blood Type</label>
+            <select id="requiredBloodType" name="requiredBloodType" required>
+              <option value="">Select Blood Type</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="requestCity">Request City</label>
+            <input type="text" id="requestCity" name="requestCity" placeholder="Enter your city" required>
+          </div>
+          <div class="form-group">
+            <label for="maxDistance">Maximum Distance (miles)</label>
+            <select id="maxDistance" name="maxDistance">
+              <option value="10">10 miles</option>
+              <option value="25" selected>25 miles</option>
+              <option value="50">50 miles</option>
+              <option value="100">100 miles</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="availabilityFilter">Availability Filter</label>
+            <select id="availabilityFilter" name="availabilityFilter">
+              <option value="Available">Available Now</option>
+              <option value="All">All Donors</option>
+              <option value="Busy">Busy</option>
+            </select>
+          </div>
+          <button type="submit" class="search-btn">
+            <i class="fas fa-brain"></i>
+            Find Perfect Match
+          </button>
+        </form>
+      </div>
+
+      <!-- Basic Search Tab -->
+      <div id="basicTab" class="tab-content">
+        <form class="search-form" id="basicSearchForm">
+          <div class="form-group">
+            <label for="bloodType">Blood Type</label>
+            <select id="bloodType" name="bloodType" required>
+              <option value="">Select Blood Type</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" placeholder="Enter city name" required>
+          </div>
+          <div class="form-group">
+            <label for="urgency">Urgency Level</label>
+            <select id="urgency" name="urgency">
+              <option value="all">All</option>
+              <option value="urgent">Urgent</option>
+              <option value="normal">Normal</option>
+            </select>
+          </div>
+          <button type="submit" class="search-btn">
+            <i class="fas fa-search"></i>
+            Search Donors
+          </button>
+        </form>
+      </div>
+
+      <!-- Find Donor Tab -->
+      <div id="donorTab" class="tab-content">
+        <form class="search-form" id="donorSearchForm">
+          <div class="form-group">
+            <label for="donorSearchInput">Search by Name or ID</label>
+            <input type="text" id="donorSearchInput" name="donorSearchInput" placeholder="Enter donor name, ID, or certificate ID" required>
+          </div>
+          <button type="submit" class="search-btn">
+            <i class="fas fa-user-search"></i>
+            Find Donor
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="resultsSection" style="display: none;">
+      <div class="results-header">
+        <div class="results-count" id="resultsCount">0 donors found</div>
+        <div class="filter-options">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="available">Available</button>
+          <button class="filter-btn" data-filter="waiting">Waiting</button>
+        </div>
+      </div>
+      <div class="donors-grid" id="donorsGrid">
+        <!-- Donor cards will be populated here -->
+      </div>
+    </section>
+
+    <!-- Loading State -->
+    <div class="loading" id="loadingState" style="display: none;">
+      <div class="spinner"></div>
+      <p>Searching for available donors...</p>
+    </div>
+
+    <!-- No Results -->
+    <div class="no-results" id="noResults" style="display: none;">
+      <i class="fas fa-search"></i>
+      <h3>No donors found</h3>
+      <p>Try adjusting your search criteria or check back later.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Main Footer Content -->
+      <div class="footer-main">
+        <!-- RAKT DHARA Column -->
+        <div class="footer-column">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <div class="logo-icon">🩸</div>
+              <h3>RAKT DHARA</h3>
+            </div>
+            <p class="footer-description">
+              India's first student-built blood bank platform connecting donors with patients in need. Making blood donation as simple as ordering food online.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links Column -->
+        <div class="footer-column">
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">How It Works</a></li>
+            <li><a href="check_availability.html" class="footer-link">Check Availability</a></li>
+            <li><a href="success_stories.html" class="footer-link">Success Stories</a></li>
+            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="#" class="footer-link">Privacy Policy</a></li>
+            <li><a href="#" class="footer-link">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info Column -->
+        <div class="footer-column">
+          <h4 class="footer-title">Contact Info</h4>
+          <ul class="footer-contact">
+            <li class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span>Emergency: 1800-BLOOD-HELP</span>
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>support@raktdhara.in</span>
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>DKTE, ICHALKARANJI</span>
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-clock"></i>
+              <span>24/7 Emergency Service</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Column -->
+        <div class="footer-column">
+          <h4 class="footer-title">Newsletter</h4>
+          <p class="newsletter-description">
+            Stay updated with our latest blood donation drives and events.
+          </p>
+          <form class="newsletter-form">
+            <div class="newsletter-input-group">
+              <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-divider"></div>
+        <div class="footer-copyright">
+          <span>© 2025 RAKT DHARA. All rights reserved.</span>
+          <div class="footer-legal">
+            <a href="#" class="legal-link">Privacy Policy</a>
+            <a href="#" class="legal-link">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const API_BASE = window.location.origin + '/api';
+    let allDonors = [];
+    let filteredDonors = [];
+    let currentSearchType = 'intelligent';
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle form submissions
+      document.getElementById('intelligentSearchForm').addEventListener('submit', handleIntelligentSearch);
+      document.getElementById('basicSearchForm').addEventListener('submit', handleBasicSearch);
+      document.getElementById('donorSearchForm').addEventListener('submit', handleDonorSearch);
+      
+      // Handle filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          filterDonors(this.dataset.filter);
+        });
+      });
+    });
+
+    // Handle smart search from the new Smart Filters section
+    async function handleSmartSearch() {
+      const bloodType = document.getElementById('requiredBloodType').value;
+      const maxDistance = document.getElementById('maxDistance').value;
+      const availabilityFilter = document.getElementById('availabilityFilter').value;
+      
+      if (!bloodType) {
+        alert('Please select a blood type');
+        return;
+      }
+      
+      showLoading();
+      
+      try {
+        const requestData = {
+          blood_type: bloodType,
+          location: { city: 'Test City' }, // Default city for now
+          max_distance: parseInt(maxDistance),
+          availability_filter: availabilityFilter
+        };
+        
+        const response = await fetch(`${API_BASE}/smart-match`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.total_matches > 0) {
+          allDonors = result.matches;
+          filteredDonors = [...result.matches];
+          hideLoading();
+          displayIntelligentResults(result);
+        } else {
+          hideLoading();
+          showNoResults();
+        }
+        
+      } catch (error) {
+        console.error('Error in smart search:', error);
+        hideLoading();
+        showNoResults();
+      }
+    }
+
+    // Tab switching functionality
+    function switchTab(tabName) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Remove active class from all tab buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected tab content
+      document.getElementById(tabName + 'Tab').classList.add('active');
+      
+      // Add active class to clicked button
+      event.target.classList.add('active');
+      
+      currentSearchType = tabName;
+    }
+
+    // Handle intelligent search
+    async function handleIntelligentSearch(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const bloodType = formData.get('requiredBloodType');
+      const city = formData.get('requestCity');
+      const maxDistance = formData.get('maxDistance');
+      const availabilityFilter = formData.get('availabilityFilter');
+      
+      showLoading();
+      
+      try {
+        const response = await fetch(`${API_BASE}/smart-match`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            blood_type: bloodType,
+            location: { city: city },
+            max_distance: parseInt(maxDistance),
+            availability_filter: availabilityFilter
+          })
+        });
+        
+        const result = await response.json();
+        
+        if (result.total_matches > 0) {
+          allDonors = result.matches;
+          filteredDonors = [...result.matches];
+          hideLoading();
+          displayIntelligentResults(result);
+        } else {
+          hideLoading();
+          showNoResults();
+        }
+        
+      } catch (error) {
+        console.error('Error in intelligent search:', error);
+        hideLoading();
+        showNoResults();
+      }
+    }
+
+    // Handle basic search
+    async function handleBasicSearch(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const bloodType = formData.get('bloodType');
+      const city = formData.get('city');
+      const urgency = formData.get('urgency');
+      
+      showLoading();
+      
+      try {
+        // Fetch all donors
+        const response = await fetch(`${API_BASE}/donors`);
+        const donors = await response.json();
+        
+        // Filter donors based on search criteria
+        let filtered = donors.filter(donor => {
+          // Check blood type compatibility
+          const isCompatible = isBloodTypeCompatible(donor.blood_type, bloodType);
+          
+          // Check city match
+          const cityMatch = !city || donor.city.toLowerCase().includes(city.toLowerCase());
+          
+          return isCompatible && cityMatch;
+        });
+        
+        allDonors = filtered;
+        filteredDonors = [...filtered];
+        
+        hideLoading();
+        displayBasicResults();
+        
+      } catch (error) {
+        console.error('Error searching donors:', error);
+        hideLoading();
+        showNoResults();
+      }
+    }
+
+    // Handle donor search
+    async function handleDonorSearch(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const searchQuery = formData.get('donorSearchInput');
+      
+      showLoading();
+      
+      try {
+        const response = await fetch(`${API_BASE}/donors/search?q=${encodeURIComponent(searchQuery)}`);
+        const results = await response.json();
+        
+        if (results.length > 0) {
+          allDonors = results;
+          filteredDonors = [...results];
+          hideLoading();
+          displayDonorSearchResults(results, searchQuery);
+        } else {
+          hideLoading();
+          showNoResults();
+        }
+        
+      } catch (error) {
+        console.error('Search failed:', error);
+        hideLoading();
+        showNoResults();
+      }
+    }
+
+    // Display intelligent search results
+    function displayIntelligentResults(result) {
+      const resultsSection = document.getElementById('resultsSection');
+      const resultsCount = document.getElementById('resultsCount');
+      const donorsGrid = document.getElementById('donorsGrid');
+      
+      resultsCount.textContent = `${result.total_matches} perfect match${result.total_matches !== 1 ? 'es' : ''} found`;
+      
+      resultsSection.style.display = 'block';
+      document.getElementById('noResults').style.display = 'none';
+      
+      const donorCards = result.matches.map(donor => createIntelligentDonorCard(donor)).join('');
+      
+      // Add "Show More Results" button if there are more results
+      let showMoreButton = '';
+      if (result.has_more) {
+        showMoreButton = `
+          <div class="show-more-container">
+            <button class="show-more-btn" onclick="loadMoreResults()">
+              <i class="fas fa-plus"></i>
+              Show ${result.remaining_count} More Results
+            </button>
+          </div>
+        `;
+      }
+      
+      donorsGrid.innerHTML = donorCards + showMoreButton;
+      
+      // Store search parameters for "Show More" functionality
+      window.lastSearchParams = {
+        blood_type: document.getElementById('requiredBloodType').value,
+        location: { city: 'Test City' },
+        max_distance: parseInt(document.getElementById('maxDistance').value),
+        availability_filter: document.getElementById('availabilityFilter').value,
+        offset: 5
+      };
+    }
+
+    // Display basic search results
+    function displayBasicResults() {
+      const resultsSection = document.getElementById('resultsSection');
+      const resultsCount = document.getElementById('resultsCount');
+      const donorsGrid = document.getElementById('donorsGrid');
+      
+      resultsCount.textContent = `${filteredDonors.length} donor${filteredDonors.length !== 1 ? 's' : ''} found`;
+      
+      if (filteredDonors.length === 0) {
+        showNoResults();
+        return;
+      }
+      
+      resultsSection.style.display = 'block';
+      document.getElementById('noResults').style.display = 'none';
+      
+      // Add search type indicator
+      const searchIndicator = `
+        <div class="search-type-indicator">
+          <i class="fas fa-search"></i>
+          <span>Basic Search Results</span>
+        </div>
+      `;
+      
+      donorsGrid.innerHTML = searchIndicator + filteredDonors.map(donor => createBasicDonorCard(donor)).join('');
+    }
+
+    // Display donor search results
+    function displayDonorSearchResults(donors, searchQuery) {
+      const resultsSection = document.getElementById('resultsSection');
+      const resultsCount = document.getElementById('resultsCount');
+      const donorsGrid = document.getElementById('donorsGrid');
+      
+      resultsCount.textContent = `${donors.length} donor${donors.length !== 1 ? 's' : ''} found for "${searchQuery}"`;
+      
+      resultsSection.style.display = 'block';
+      document.getElementById('noResults').style.display = 'none';
+      
+      // Add search type indicator
+      const searchIndicator = `
+        <div class="search-type-indicator">
+          <i class="fas fa-user-search"></i>
+          <span>Donor Search Results for "${searchQuery}"</span>
+        </div>
+      `;
+      
+      donorsGrid.innerHTML = searchIndicator + donors.map(donor => createBasicDonorCard(donor)).join('');
+    }
+
+    // Create intelligent donor card with compatibility score
+    function createIntelligentDonorCard(donor) {
+      const canDonate = canDonorDonate(donor);
+      const daysRemaining = getDaysRemaining(donor);
+      
+      // Calculate compatibility percentage
+      const compatibilityPercent = Math.min(Math.round((donor.compatibility_score / 200) * 100), 100);
+      
+      // Calculate reliability rating (based on donation count and consistency)
+      const reliabilityRating = Math.min(4.0 + (donor.donation_count * 0.1), 5.0);
+      
+      // Get initials for avatar
+      const initials = donor.name.split(' ').map(n => n[0]).join('').toUpperCase();
+      
+      // Format last donation
+      let lastDonationText = 'Never donated';
+      if (donor.last_donation) {
+        const lastDonationDate = new Date(donor.last_donation);
+        const monthsAgo = Math.floor((new Date() - lastDonationDate) / (1000 * 60 * 60 * 24 * 30));
+        lastDonationText = `${monthsAgo} month${monthsAgo !== 1 ? 's' : ''} ago`;
+      }
+      
+      return `
+        <div class="donor-card">
+          <div class="donor-card-header">
+            <div class="donor-avatar">${initials}</div>
+            <div class="donor-info">
+              <div class="donor-name">${donor.name}</div>
+              <div class="donor-details">${donor.blood_type} • Last donation: ${lastDonationText}</div>
+            </div>
+            <div class="donor-status">
+              <div class="availability-badge">Available Now</div>
+              <div class="distance-info">${donor.distance_miles} miles</div>
+            </div>
+          </div>
+          
+          <div class="donor-stats">
+            <div class="stat-item">
+              <div class="stat-value">${compatibilityPercent}%</div>
+              <div class="stat-label">Compatibility Score</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">${donor.donation_count}</div>
+              <div class="stat-label">Previous Donations</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">${reliabilityRating.toFixed(1)}</div>
+              <div class="stat-label">Reliability Rating</div>
+            </div>
+          </div>
+          
+          <div class="donor-actions">
+            <button class="btn-contact" onclick="contactDonor('${donor.phone}', '${donor.name}')">
+              Contact Donor
+            </button>
+            <button class="btn-outreach" onclick="draftOutreach('${donor.id}', '${donor.name}', '${donor.phone}', '${donor.email}')">
+              Draft Outreach
+            </button>
+            <button class="btn-profile" onclick="viewDonorProfile('${donor.id}', '${donor.name}')">
+              View Profile
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Create basic donor card
+    function createBasicDonorCard(donor) {
+      const canDonate = canDonorDonate(donor);
+      const daysRemaining = getDaysRemaining(donor);
+      
+      let availabilityClass, availabilityText;
+      if (canDonate) {
+        availabilityClass = 'available';
+        availabilityText = 'Available';
+      } else if (donor.last_donation_date) {
+        availabilityClass = 'waiting';
+        availabilityText = `${daysRemaining} days`;
+      } else {
+        availabilityClass = 'available';
+        availabilityText = 'Available';
+      }
+      
+      return `
+        <div class="donor-card">
+          <div class="donor-header">
+            <div class="donor-name">${donor.name}</div>
+            <div class="availability-badge ${availabilityClass}">${availabilityText}</div>
+          </div>
+          <div class="donor-details">
+            <div class="detail-item">
+              <i class="fas fa-tint"></i>
+              <span>Blood Type: ${donor.blood_type}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Location: ${donor.city}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-phone"></i>
+              <span>Phone: ${donor.phone}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-history"></i>
+              <span>Donations: ${donor.donation_count}</span>
+            </div>
+          </div>
+          <div class="donor-actions">
+            <button class="action-btn btn-contact" onclick="contactDonor('${donor.phone}', '${donor.name}')">
+              <i class="fas fa-phone"></i>
+              Contact
+            </button>
+            <button class="action-btn btn-outreach" onclick="draftOutreach('${donor.id}', '${donor.name}', '${donor.phone}', '${donor.email}')">
+              <i class="fas fa-envelope"></i>
+              Draft Outreach
+            </button>
+            <button class="action-btn ${canDonate ? 'btn-request' : 'btn-disabled'}" 
+                    ${canDonate ? `onclick="requestDonation('${donor.id}', '${donor.name}')"` : 'disabled'}>
+              <i class="fas fa-heart"></i>
+              ${canDonate ? 'Request' : 'Unavailable'}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Check blood type compatibility
+    function isBloodTypeCompatible(donorType, requestedType) {
+      if (!requestedType) return true;
+      
+      const compatibility = {
+        'A+': ['A+', 'A-', 'O+', 'O-'],
+        'A-': ['A-', 'O-'],
+        'B+': ['B+', 'B-', 'O+', 'O-'],
+        'B-': ['B-', 'O-'],
+        'AB+': ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+        'AB-': ['A-', 'B-', 'AB-', 'O-'],
+        'O+': ['O+', 'O-'],
+        'O-': ['O-']
+      };
+      
+      return compatibility[requestedType]?.includes(donorType) || false;
+    }
+
+    // Filter donors by availability
+    function filterDonors(filter) {
+      if (filter === 'all') {
+        filteredDonors = [...allDonors];
+      } else if (filter === 'available') {
+        filteredDonors = allDonors.filter(donor => {
+          // Check if donor can donate (90-day rule)
+          if (!donor.last_donation_date && !donor.last_donation) return true;
+          
+          const lastDonation = donor.last_donation_date || donor.last_donation;
+          const daysSinceDonation = Math.floor((new Date() - new Date(lastDonation)) / (1000 * 60 * 60 * 24));
+          return daysSinceDonation >= 90;
+        });
+      } else if (filter === 'waiting') {
+        filteredDonors = allDonors.filter(donor => {
+          const lastDonation = donor.last_donation_date || donor.last_donation;
+          if (!lastDonation) return false;
+          
+          const daysSinceDonation = Math.floor((new Date() - new Date(lastDonation)) / (1000 * 60 * 60 * 24));
+          return daysSinceDonation < 90;
+        });
+      }
+      
+      // Re-display results based on current search type
+      if (currentSearchType === 'intelligent') {
+        displayIntelligentResults({ total_matches: filteredDonors.length, matches: filteredDonors });
+      } else {
+        displayBasicResults();
+      }
+    }
+
+    // Check if donor can donate
+    function canDonorDonate(donor) {
+      const lastDonation = donor.last_donation_date || donor.last_donation;
+      if (!lastDonation) return true;
+      
+      const daysSinceDonation = Math.floor((new Date() - new Date(lastDonation)) / (1000 * 60 * 60 * 24));
+      return daysSinceDonation >= 90;
+    }
+
+    // Get days remaining until next donation
+    function getDaysRemaining(donor) {
+      const lastDonation = donor.last_donation_date || donor.last_donation;
+      if (!lastDonation) return 0;
+      
+      const daysSinceDonation = Math.floor((new Date() - new Date(lastDonation)) / (1000 * 60 * 60 * 24));
+      return Math.max(0, 90 - daysSinceDonation);
+    }
+
+    // Contact donor
+    function contactDonor(phone, name) {
+      if (confirm(`Contact ${name} at ${phone}?`)) {
+        window.open(`tel:${phone}`);
+      }
+    }
+
+    // Draft outreach to donor
+    function draftOutreach(donorId, donorName, donorPhone, donorEmail) {
+      // Create outreach modal
+      const modalHTML = `
+        <div id="outreachModal" class="outreach-modal" onclick="closeOutreachModal()">
+          <div class="outreach-modal-content" onclick="event.stopPropagation()">
+            <div class="outreach-modal-header">
+              <h2>Draft Outreach Message</h2>
+              <button class="outreach-close" onclick="closeOutreachModal()">&times;</button>
+            </div>
+            
+            <div class="outreach-form-group">
+              <label>To:</label>
+              <input type="text" id="outreachRecipient" value="${donorName}" readonly>
+            </div>
+            
+            <div class="outreach-form-group">
+              <label>Contact:</label>
+              <input type="text" id="outreachContact" value="${donorPhone || donorEmail || 'N/A'}" readonly>
+            </div>
+            
+            <div class="outreach-form-group">
+              <label>Message Type:</label>
+              <select id="outreachType">
+                <option value="urgent">Urgent Blood Request</option>
+                <option value="scheduled">Scheduled Donation</option>
+                <option value="general">General Inquiry</option>
+                <option value="thank">Thank You Message</option>
+              </select>
+            </div>
+            
+            <div class="outreach-form-group">
+              <label>Quick Templates:</label>
+              <div class="outreach-templates">
+                <button type="button" class="template-btn" onclick="useTemplate('urgent')">Urgent Request</button>
+                <button type="button" class="template-btn" onclick="useTemplate('scheduled')">Scheduled</button>
+                <button type="button" class="template-btn" onclick="useTemplate('thank')">Thank You</button>
+                <button type="button" class="template-btn" onclick="useTemplate('custom')">Custom</button>
+              </div>
+            </div>
+            
+            <div class="outreach-form-group">
+              <label>Message:</label>
+              <textarea id="outreachMessage" placeholder="Type your message here...">Hello ${donorName},
+
+I hope this message finds you well. We have an urgent blood request that matches your blood type and location.
+
+Would you be available to donate blood in the next few days? Your contribution could save a life.
+
+Please let me know your availability.
+
+Thank you for your generosity.
+
+Best regards,
+RAKT DHARA Team</textarea>
+            </div>
+            
+            <div class="outreach-actions">
+              <button class="btn-cancel-outreach" onclick="closeOutreachModal()">Cancel</button>
+              <button class="btn-send-outreach" onclick="sendOutreach('${donorId}', '${donorName}', '${donorPhone}', '${donorEmail}')">Send Message</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Add modal to page
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    // Close outreach modal
+    function closeOutreachModal() {
+      const modal = document.getElementById('outreachModal');
+      if (modal) {
+        modal.remove();
+      }
+    }
+
+    // Use message template
+    function useTemplate(type) {
+      const messageTextarea = document.getElementById('outreachMessage');
+      const recipientName = document.getElementById('outreachRecipient').value;
+      
+      const templates = {
+        urgent: `Hello ${recipientName},
+
+URGENT BLOOD REQUEST
+
+We have an emergency blood request that matches your blood type. A patient's life depends on immediate blood donation.
+
+Could you please donate blood today or tomorrow? We can arrange immediate pickup or you can visit our nearest center.
+
+This is a life-saving situation. Your quick response could save a life.
+
+Please call us immediately if you can help.
+
+Emergency Contact: [Your Contact Number]
+
+Thank you for your compassion.
+RAKT DHARA Emergency Team`,
+
+        scheduled: `Hello ${recipientName},
+
+SCHEDULED BLOOD DONATION REQUEST
+
+We are organizing a blood donation camp and would love to have you participate.
+
+Event Details:
+- Date: [Date]
+- Time: [Time]
+- Location: [Location]
+
+Your regular donations have been invaluable to our cause. We would be honored to have you join us for this special event.
+
+Please confirm your availability.
+
+Thank you for your continued support.
+RAKT DHARA Team`,
+
+        thank: `Hello ${recipientName},
+
+THANK YOU FOR YOUR GENEROSITY
+
+We want to express our heartfelt gratitude for your recent blood donation. Your selfless act has made a real difference in someone's life.
+
+Your donation has been successfully processed and is helping save lives in our community. We truly appreciate donors like you who make our mission possible.
+
+We hope to see you again for future donations. Together, we can continue to save lives.
+
+With sincere appreciation,
+RAKT DHARA Team`,
+
+        custom: `Hello ${recipientName},
+
+I hope this message finds you well.
+
+[Your custom message here]
+
+Thank you for your time and consideration.
+
+Best regards,
+RAKT DHARA Team`
+      };
+      
+      messageTextarea.value = templates[type] || templates.custom;
+    }
+
+    // Send outreach message
+    function sendOutreach(donorId, donorName, donorPhone, donorEmail) {
+      const messageType = document.getElementById('outreachType').value;
+      const message = document.getElementById('outreachMessage').value;
+      
+      if (!message.trim()) {
+        alert('Please enter a message before sending.');
+        return;
+      }
+      
+      // Create outreach data
+      const outreachData = {
+        donor_id: donorId,
+        donor_name: donorName,
+        donor_phone: donorPhone,
+        donor_email: donorEmail,
+        message_type: messageType,
+        message: message,
+        timestamp: new Date().toISOString(),
+        status: 'sent'
+      };
+      
+      // In a real application, you would send this to your backend
+      console.log('Outreach message sent:', outreachData);
+      
+      // Show success message
+      alert(`Outreach message sent to ${donorName}!\n\nMessage Type: ${messageType}\nContact: ${donorPhone || donorEmail || 'N/A'}`);
+      
+      // Close modal
+      closeOutreachModal();
+      
+      // Optional: Log to localStorage for demo purposes
+      const outreachHistory = JSON.parse(localStorage.getItem('outreachHistory') || '[]');
+      outreachHistory.push(outreachData);
+      localStorage.setItem('outreachHistory', JSON.stringify(outreachHistory));
+    }
+
+    // View donor profile
+    async function viewDonorProfile(donorId, donorName) {
+      try {
+        // Fetch donor details
+        const response = await fetch(`${API_BASE}/users/${donorId}`);
+        const donor = await response.json();
+        
+        // Create and show profile modal
+        showDonorProfileModal(donor);
+        
+      } catch (error) {
+        console.error('Error fetching donor profile:', error);
+        alert('Unable to load donor profile. Please try again.');
+      }
+    }
+
+    // Show donor profile modal
+    function showDonorProfileModal(donor) {
+      // Create modal HTML
+      const modalHTML = `
+        <div id="donorProfileModal" class="modal-overlay" onclick="closeDonorProfileModal()">
+          <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+              <h2>Donor Profile</h2>
+              <button class="modal-close" onclick="closeDonorProfileModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="profile-section">
+                <div class="profile-avatar">
+                  <div class="avatar-circle">${donor.name.split(' ').map(n => n[0]).join('').toUpperCase()}</div>
+                </div>
+                <div class="profile-info">
+                  <h3>${donor.name}</h3>
+                  <p class="profile-email">${donor.email}</p>
+                  <p class="profile-phone">${donor.phone}</p>
+                </div>
+              </div>
+              
+              <div class="profile-details">
+                <div class="detail-row">
+                  <span class="detail-label">Blood Type:</span>
+                  <span class="detail-value">${donor.blood_type}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Location:</span>
+                  <span class="detail-value">${donor.city}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Total Donations:</span>
+                  <span class="detail-value">${donor.donation_count}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Member Since:</span>
+                  <span class="detail-value">${new Date(donor.created_at).toLocaleDateString()}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Last Donation:</span>
+                  <span class="detail-value">${donor.last_donation_date ? new Date(donor.last_donation_date).toLocaleDateString() : 'Never'}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Availability:</span>
+                  <span class="detail-value">${donor.is_available ? 'Available' : 'Not Available'}</span>
+                </div>
+              </div>
+              
+              <div class="modal-actions">
+                <button class="btn-contact" onclick="contactDonor('${donor.phone}', '${donor.name}')">
+                  Contact Donor
+                </button>
+                <button class="btn-profile" onclick="requestDonation('${donor.id}', '${donor.name}')">
+                  Request Donation
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Add modal to page
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    // Close donor profile modal
+    function closeDonorProfileModal() {
+      const modal = document.getElementById('donorProfileModal');
+      if (modal) {
+        modal.remove();
+      }
+    }
+
+    // Load more results
+    async function loadMoreResults() {
+      if (!window.lastSearchParams) {
+        console.error('No previous search parameters found');
+        return;
+      }
+      
+      const showMoreBtn = document.querySelector('.show-more-btn');
+      if (showMoreBtn) {
+        showMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        showMoreBtn.disabled = true;
+      }
+      
+      try {
+        const response = await fetch(`${API_BASE}/smart-match/more`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(window.lastSearchParams)
+        });
+        
+        const result = await response.json();
+        
+        if (result.matches && result.matches.length > 0) {
+          // Add new donor cards to existing ones
+          const donorsGrid = document.getElementById('donorsGrid');
+          const newDonorCards = result.matches.map(donor => createIntelligentDonorCard(donor)).join('');
+          
+          // Remove the old "Show More" button
+          const showMoreContainer = document.querySelector('.show-more-container');
+          if (showMoreContainer) {
+            showMoreContainer.remove();
+          }
+          
+          // Add new cards
+          donorsGrid.insertAdjacentHTML('beforeend', newDonorCards);
+          
+          // Add new "Show More" button if there are still more results
+          if (result.has_more) {
+            const newShowMoreButton = `
+              <div class="show-more-container">
+                <button class="show-more-btn" onclick="loadMoreResults()">
+                  <i class="fas fa-plus"></i>
+                  Show ${result.remaining_count} More Results
+                </button>
+              </div>
+            `;
+            donorsGrid.insertAdjacentHTML('beforeend', newShowMoreButton);
+          }
+          
+          // Update search parameters for next load
+          window.lastSearchParams.offset = result.offset;
+          
+        } else {
+          // No more results
+          const showMoreContainer = document.querySelector('.show-more-container');
+          if (showMoreContainer) {
+            showMoreContainer.remove();
+          }
+        }
+        
+      } catch (error) {
+        console.error('Error loading more results:', error);
+        alert('Failed to load more results. Please try again.');
+        
+        // Reset button
+        if (showMoreBtn) {
+          showMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Show More Results';
+          showMoreBtn.disabled = false;
+        }
+      }
+    }
+
+    // Request donation
+    async function requestDonation(donorId, donorName) {
+      // Get requester details (in a real app, this would come from user session)
+      const requesterName = prompt('Enter your name:');
+      if (!requesterName) return;
+      
+      const requesterPhone = prompt('Enter your phone number:');
+      if (!requesterPhone) return;
+      
+      const requesterEmail = prompt('Enter your email:');
+      if (!requesterEmail) return;
+      
+      const urgency = prompt('Enter urgency level (Low/Medium/High):', 'Medium');
+      if (!urgency) return;
+      
+      if (confirm(`Send donation request to ${donorName}?`)) {
+        try {
+          const requestData = {
+            requester_name: requesterName,
+            contact_phone: requesterPhone,
+            requester_email: requesterEmail,
+            donor_id: donorId,
+            blood_type: 'O-', // This should come from the search criteria
+            urgency: urgency
+          };
+          
+          const response = await fetch(`${API_BASE}/donation-request`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestData)
+          });
+          
+          const result = await response.json();
+          
+          if (result.success) {
+            alert('Request sent successfully! The donor will be notified.');
+            closeDonorProfileModal();
+          } else {
+            alert('Failed to send request: ' + result.error);
+          }
+          
+        } catch (error) {
+          console.error('Error sending donation request:', error);
+          alert('Failed to send request. Please try again.');
+        }
+      }
+    }
+
+    // Show loading state
+    function showLoading() {
+      document.getElementById('loadingState').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.getElementById('noResults').style.display = 'none';
+    }
+
+    // Hide loading state
+    function hideLoading() {
+      document.getElementById('loadingState').style.display = 'none';
+    }
+
+    // Show no results
+    function showNoResults() {
+      document.getElementById('noResults').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
+

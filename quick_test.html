@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quick API Test</title>
+</head>
+<body>
+    <h1>Quick API Test</h1>
+    <button onclick="testAPI()">Test API Connection</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testAPI() {
+            const result = document.getElementById('result');
+            try {
+                result.innerHTML = 'Testing...';
+                const response = await fetch('http://localhost:5000/api/ngo/statistics');
+                const data = await response.json();
+                result.innerHTML = `SUCCESS! Data: ${JSON.stringify(data)}`;
+                result.style.color = 'green';
+            } catch (error) {
+                result.innerHTML = `ERROR: ${error.message}`;
+                result.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RAKT DHARA - Blood Bank Platform</title>
+  <!-- Add Google Fonts for Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #e60023;      /* 10% Accent: Red */
+      --secondary: #1976d2;    /* 30% Secondary: Blue */
+      --background: #f6f8fa;   /* 60% Main: Light Gray */
+      --surface: #fff;
+      --text-main: #222;
+      --text-light: #fff;
+      --text-secondary: #1976d2;
+      --error: #d32f2f;
+      --success: #43a047;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --spacing: 16px;
+    }
+
+    html, body, * {
+      font-family: 'Poppins', Arial, sans-serif !important;
+    }
+    html, body {
+      background: var(--background);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* 60%: Backgrounds */
+    body,
+    .material-faq,
+    .faq,
+    .features,
+    .benefits,
+    .mission-section,
+    .cta {
+      background: var(--background) !important;
+    }
+    .emergency{
+      background-color: #ccc !important;
+    }
+    /* 30%: Secondary (Blue) for sections, highlights, and some headings */
+    .faq-title,
+    .mission-left h2,
+    .mission-right .highlight,
+    .footer-links a:hover,
+    .faq-card details[open] summary {
+      color: var(--secondary) !important;
+    }
+    .mission-section {
+      background: #e3f0fa !important;
+    }
+    .cta {
+      background: #e3f0fa !important;
+      color: var(--text-main);
+    }
+    .emergency {
+      background: var(--secondary) !important;
+      color: var(--text-light) !important;
+    }
+
+    /* 10%: Primary (Accent Red) for CTAs, buttons, icons, and key highlights */
+    h1, h2, h3, h4,
+    .actions a,
+    .actions a.secondary,
+    .donate-btn,
+    .nav-links .donate-btn,
+    .sticky-donate button,
+    .faq-card summary,
+    .faq-icon,
+    .logo,
+    .footer-note strong {
+      color: var(--primary) !important;
+    }
+    .actions a,
+    .donate-btn,
+    .nav-links .donate-btn,
+    .sticky-donate button {
+      background: var(--primary) !important;
+      color: var(--text-light) !important;
+      border: none;
+    }
+    .actions a.secondary {
+      background: var(--surface) !important;
+      color: var(--primary) !important;
+      border: 2px solid var(--primary) !important;
+    }
+    .actions a:hover,
+    .donate-btn:hover,
+    .nav-links .donate-btn:hover,
+    .sticky-donate button:hover {
+      background: #b3001c !important;
+      color: var(--text-light) !important;
+    }
+
+    /* Cards and surfaces */
+    .card,
+    .faq-card,
+    .highlight {
+      background: var(--surface) !important;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      color: var(--text-main);
+    }
+
+    /* Footer */
+    footer, .footer {
+      background: #8f8f8f !important;
+      color: var(--text-light) !important;
+    }
+    .footer-links a {
+      color: var(--text-light) !important;
+    }
+    .footer-links a:hover {
+      color: var(--secondary) !important;
+    }
+
+    /* Misc */
+    .faq-card summary {
+      font-weight: 600;
+      font-size: 1.15rem;
+      cursor: pointer;
+      padding: 20px 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      outline: none;
+      border: none;
+      transition: color 0.2s;
+    }
+    .faq-icon {
+      font-size: 1.5em;
+      color: var(--secondary) !important;
+      vertical-align: middle;
+    }
+    .faq-card details[open] summary {
+      color: var(--secondary) !important;
+    }
+    .faq-card p {
+      margin: 0 0 0 36px;
+      color: var(--text-main);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .sticky-donate button {
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 16px 38px;
+      box-shadow: 0 4px 18px rgba(230,0,0,0.13);
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    @media (max-width: 600px) {
+      .faq-columns {
+        padding: 0 8px;
+      }
+      .faq-title {
+        font-size: 1.3rem;
+      }
+    }
+    /* --- Typography & Color Overhaul --- */
+    html, body, * {
+      font-family: 'Poppins', Arial, sans-serif !important;
+    }
+    html, body {
+      background: #f6f8fa;
+      color: #222;
+      line-height: 1.6;
+    }
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: #e60000;
+      margin-bottom: 0.5em;
+    }
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.3rem; }
+    p, .card p { color: #333; }
+    /* --- Hero Section Redesign --- */
+    .hero {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 110px 20px 80px 20px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.92) 60%, rgba(255,255,255,0.0) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: left;
+      max-width: 600px;
+      width: 100%;
+      margin-left: 0;
+      animation: fadeInUp 1s ease;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #e60000;
+      margin-bottom: 0.5em;
+      font-weight: 700;
+      line-height: 1.15;
+      animation: fadeInUp 1.2s 0.1s both;
+    }
+    .hero .hero-sub {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 1.2em;
+      animation: fadeInUp 1.2s 0.2s both;
+    }
+    .hero .actions {
+      display: flex;
+      gap: 18px;
+      margin-top: 1.2em;
+      animation: fadeInUp 1.2s 0.3s both;
+    }
+    .hero .actions a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #e60000;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(230,0,0,0.08);
+      border: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .hero .actions a.secondary {
+      background: #fff;
+      color: #e60000;
+      border: 2px solid #e60000;
+    }
+    .hero .actions a:hover {
+      background: #b30000;
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
+    }
+    .hero .actions a.secondary:hover {
+      background: #f6f8fa;
+      color: #b30000;
+    }
+    /* --- Stats with Human Touch --- */
+    .counters {
+      display: flex;
+      gap: 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 1.5em 0 0.5em 0;
+      color: #222;
+      z-index: 2;
+      position: relative;
+    }
+    .counters span {
+      color: #e60000;
+      font-size: 1.5em;
+      font-weight: 700;
+    }
+    /* --- Sticky Donate Button (Mobile) --- */
+    @media (max-width: 600px) {
+      .hero {
+        min-height: 340px;
+        padding: 80px 10px 60px 10px;
+      }
+      .hero h1 { font-size: 1.5rem; }
+      .hero-content { max-width: 100%; }
+      .sticky-donate {
+        display: flex;
+      }
+    }
+    .sticky-donate {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: none;
+    }
+    .sticky-donate button {
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 16px 38px;
+      box-shadow: 0 4px 18px rgba(230,0,0,0.13);
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Forms Container */
+    .forms-container {
+      display: flex;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Visual distinction between forms */
+    #donate {
+      border-left: 5px solid #e60023;
+    }
+
+    #request {
+      border-left: 5px solid #1976d2;
+    }
+
+    /* Form Styles */
+    .form-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      padding: 40px;
+      flex: 1;
+      max-width: 500px;
+      min-width: 400px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e1e5e9;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #e60023;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: #e60023;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn:hover {
+      background: #c41e3a;
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      margin-top: 10px;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .btn-primary {
+      background: #e60023;
+    }
+
+    .btn-primary:hover {
+      background: #c41e3a;
+    }
+
+    /* Alert Styles */
+    .alert {
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    /* Certificate Generation Section */
+    .certificate-section {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 25px;
+      border-radius: 15px;
+      border: 2px solid #e60023;
+      margin: 30px auto;
+      max-width: 500px;
+    }
+
+    .certificate-section h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #e60023;
+      font-weight: bold;
+    }
+
+    .certificate-section p {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    /* Navigation */
+    .nav {
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #e60023;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #e60023;
+    }
+
+    .donate-btn {
+      background: #e60023;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .donate-btn:hover {
+      background: #c41e3a;
+      color: white;
+    }
+
+    /* Sign Up Button */
+    .signup-btn {
+      background: #e60023;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .signup-btn:hover {
+      background: #c41e3a;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 0;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 560px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      animation: modalSlideIn 0.3s ease;
+      max-height: 90vh; /* ensure modal fits viewport */
+      overflow: hidden; /* keep rounded corners */
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #e60023, #c41e3a);
+      color: white;
+      padding: 20px;
+      border-radius: 20px 20px 0 0;
+      text-align: center;
+      position: sticky; /* keep header visible */
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .modal-body {
+      padding: 24px 24px 32px 24px;
+      max-height: calc(90vh - 110px); /* header height + padding */
+      overflow-y: auto; /* scroll inside modal for long forms */
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Improve form density for modal */
+    .modal-body .form-group { margin-bottom: 14px; }
+    .modal-body .form-group input,
+    .modal-body .form-group select,
+    .modal-body .form-group textarea { padding: 10px 12px; }
+
+    /* Make tab buttons sticky for quick access */
+    .login-tabs { position: sticky; top: 0; background: #fff; z-index: 1; padding-top: 6px; }
+
+    @media (max-width: 520px) {
+      .modal-content { width: 94vw; max-height: 94vh; }
+      .modal-body { max-height: calc(94vh - 110px); }
+    }
+
+    .close {
+      color: white;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 15px;
+    }
+
+    .close:hover {
+      opacity: 0.7;
+    }
+
+    .login-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .tab-button {
+      flex: 1;
+      padding: 15px;
+      background: #f8f9fa;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .tab-button.active {
+      background: #e60023;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .user-credentials {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      border-left: 4px solid #e60023;
+    }
+
+    .user-credentials h4 {
+      color: #e60023;
+      margin: 0 0 10px 0;
+      font-size: 1rem;
+    }
+
+    .user-credentials p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .role-badge {
+      display: inline-block;
+      background: #e60023;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+
+    /* Admin Link */
+    .admin-link {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .admin-link a {
+      color: #e60023;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 20px;
+      border: 2px solid #e60023;
+      border-radius: 25px;
+      transition: all 0.3s;
+    }
+
+    .admin-link a:hover {
+      background: #e60023;
+      color: white;
+    }
+
+    /* Login Section */
+    .login-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid #e1e5e9;
+    }
+
+    .login-section h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .login-section p {
+      text-align: center;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero .actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .forms-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 10px;
+      }
+
+      .form-container {
+        margin: 10px;
+        padding: 20px;
+        min-width: unset;
+        max-width: 100%;
+      }
+    }
+
+    /* Hidden sections */
+    .hidden {
+      display: none;
+    }
+
+    /* Loading states */
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+
+    /* Success/Error messages */
+    .message {
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    /* Animated Benefits Section Styles */
+    .animated-benefits {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 80px 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .animated-benefits::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,0,0,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.5;
+    }
+
+    .benefits-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      overflow: hidden; /* ensure track scrolls within viewport */
+    }
+
+    /* Railway wrapper to anchor rails just below cards */
+    .benefits-railway {
+      position: relative;
+      padding: 30px 0; /* reserved vertical room for rails under cards */
+    }
+
+    /* Railway track lines under the moving cards */
+    .benefits-connector {
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      bottom: 10px; /* positioned at bottom of container */
+      height: 5px; /* increased thickness */
+      background: linear-gradient(90deg, #e60023, #1976d2, #e60023);
+      opacity: 1; /* full opacity */
+      filter: drop-shadow(0 3px 8px rgba(230,0,35,0.5)); /* stronger red-tinted shadow */
+      background-size: 200% 100%;
+      animation: connectorFlow 8s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+      width: 120%; /* extend beyond container for seamless effect */
+    }
+
+    .benefits-connector.secondary{
+      bottom: 22px; /* second rail positioned below the first with more space */
+      height: 5px; /* increased thickness */
+      background: linear-gradient(90deg, #1976d2, #e60023, #1976d2);
+      opacity: 0.9; /* increased opacity */
+      filter: drop-shadow(0 3px 8px rgba(25,118,210,0.5)); /* stronger blue-tinted shadow */
+      animation: connectorFlowReverse 8s linear infinite;
+      width: 120%;
+    }
+
+    /* Railway sleepers (ties) */
+    .benefits-railway::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 8px;
+      height: 16px;
+      background-image: repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(80, 80, 80, 0.7) 15px, rgba(80, 80, 80, 0.7) 20px);
+      z-index: 0;
+      pointer-events: none;
+      animation: railwaySleepers 5s linear infinite;
+      width: 120%;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    @keyframes connectorFlow { 
+      0% { background-position: 0% 0; } 
+      100% { background-position: 200% 0; } 
+    }
+
+    @keyframes connectorFlowReverse { 
+      0% { background-position: 200% 0; } 
+      100% { background-position: 0% 0; } 
+    }
+
+    @keyframes railwaySleepers {
+      0% { background-position: 200px 0; }
+      100% { background-position: 0px 0; }
+    }
+
+    .animated-benefits h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e60023;
+      margin-bottom: 50px;
+      letter-spacing: -0.5px;
+    }
+
+    .benefits-track {
+      display: flex;
+      animation: trainMove 20s linear infinite;
+      width: max-content;
+      gap: 30px;
+      will-change: transform;
+      padding: 10px 0; /* breathing room so cards don't feel compressed */
+      z-index: 2; /* above connectors */
+      position: relative;
+    }
+
+    /* Force restart animation on reload/navigation to beat hot-reload caches */
+    .benefits-track { animation-play-state: running; }
+
+    .benefit-slide {
+      flex-shrink: 0;
+      width: 300px;
+      position: relative;
+      margin-bottom: 30px; /* Space for the tracks below */
+    }
+
+    .benefit-image {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      border: 2px solid #e0e0e0;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      /* Train coach styling */
+      transform-style: preserve-3d;
+      transform: perspective(1000px);
+    }
+
+    .benefit-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #e60023, #1976d2);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .benefit-image:hover::before {
+      transform: scaleX(1);
+    }
+
+    .benefit-image:hover {
+      transform: translateY(-10px) perspective(1000px) rotateY(5deg);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+      border-color: #e60023;
+      cursor: pointer;
+      z-index: 10; /* Ensure hovered train coach appears above others */
+    }
+
+    /* Keep animation running even on hover */
+    .benefits-railway:hover .benefits-track {
+      animation-play-state: running;
+    }
+
+    /* Click effect */
+    .benefit-image:active {
+      transform: translateY(-5px) perspective(1000px) rotateY(3deg);
+      transition: all 0.1s ease;
+    }
+
+    .syringe-icon {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .benefit-content h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .benefit-content p {
+      font-size: 0.85rem;
+      color: #6c757d;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* Train movement animation - continuous right to left motion with seamless loop */
+    @keyframes trainMove {
+      0% { transform: translateX(calc(-300px * 8 - 30px * 8)); /* 8 slides with width and gap */}
+      100% { transform: translateX(0); }
+    }
+
+    /* Keep animation running on hover */
+    .benefits-track:hover {
+      animation-play-state: running;
+    }
+
+    /* Responsive styles for the benefits section */
+    @media (max-width: 1200px) {
+      .benefit-slide {
+        width: 250px;
+      }
+      .benefits-track {
+        gap: 25px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .benefit-slide {
+        width: 220px;
+      }
+      .benefits-track {
+        gap: 20px;
+      }
+      .benefit-image {
+        height: 120px;
+        padding: 15px;
+      }
+      .benefits-connector {
+        bottom: 8px;
+      }
+      .benefits-connector.secondary {
+        bottom: 16px;
+      }
+      .benefits-railway::before {
+        bottom: 6px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .benefit-slide {
+        width: 180px;
+      }
+      .benefits-track {
+        gap: 15px;
+      }
+      .benefit-image {
+        height: 110px;
+        padding: 12px;
+      }
+      .syringe-icon {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+      }
+      .benefit-content h3 {
+        font-size: 1rem;
+      }
+      .benefit-content p {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .animated-benefits {
+        padding: 60px 15px;
+      }
+      .benefits-track { --benefits-speed: 60s; }
+      .benefits-connector { top: calc(50% + 42px); }
+      .benefits-connector.secondary { top: calc(50% + 54px); }
+      
+      .animated-benefits h2 {
+        font-size: 2rem;
+        margin-bottom: 40px;
+      }
+      
+      .benefit-slide {
+        width: 280px;
+      }
+      
+      .benefit-image {
+        padding: 18px;
+        height: 120px;
+      }
+      
+      .syringe-icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+      
+      .benefit-content h3 {
+        font-size: 1.1rem;
+      }
+      
+      .benefit-content p {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .animated-benefits {
+        padding: 50px 10px;
+      }
+      .benefits-track { --benefits-speed: 55s; }
+      .benefits-connector { top: calc(50% + 38px); }
+      .benefits-connector.secondary { top: calc(50% + 50px); }
+      
+      .animated-benefits h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+      }
+      
+      .benefit-slide {
+        width: 260px;
+      }
+      
+      .benefit-image {
+        padding: 15px;
+        height: 110px;
+      }
+      
+      .syringe-icon {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+      }
+      
+      .benefit-content h3 {
+        font-size: 1rem;
+      }
+      
+      .benefit-content p {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Accessibility: respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .benefits-track { animation: none; }
+    }
+
+    /* Animated Counter Styles */
+    .counters span {
+      display: inline-block;
+      font-weight: 700;
+      color: var(--primary);
+      transition: all 0.3s ease;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .counters span:hover {
+      transform: scale(1.1);
+      color: #b3001c;
+    }
+
+    /* Counter animation effect */
+    .counters span.animating {
+      animation: counterPulse 0.1s ease-in-out;
+    }
+
+    @keyframes counterPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Footer Styles */
+    .footer {
+      background: #8f8f8f;
+      color: #fff;
+      padding: 40px 0 20px 0;
+      margin-top: 60px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .footer-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-icon {
+      font-size: 1.5rem;
+      color: #e60023;
+    }
+
+    .footer-logo h3 {
+      color: #e60023;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .footer-description {
+      color: #1976d2;
+      line-height: 1.6;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #e60023;
+      color: #fff;
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #b3001c;
+      transform: translateY(-2px);
+    }
+
+    .footer-title {
+      color: #e60023;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-link {
+      color: #1976d2;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-link:hover {
+      color: #fff;
+    }
+
+    .footer-link::before {
+      content: "■";
+      font-size: 0.6rem;
+      color: #e60023;
+    }
+
+    .footer-contact {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1976d2;
+      font-size: 0.95rem;
+    }
+
+    .contact-item i {
+      color: #e60023;
+      width: 16px;
+      text-align: center;
+    }
+
+    .newsletter-description {
+      color: #1976d2;
+      line-height: 1.6;
+      margin: 0 0 20px 0;
+      font-size: 0.95rem;
+    }
+
+    .newsletter-form {
+      margin-top: 10px;
+    }
+
+    .newsletter-input-group {
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      background: #fff;
+      color: #333;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .newsletter-input::placeholder {
+      color: #999;
+    }
+
+    .newsletter-btn {
+      background: #e60023;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .newsletter-btn:hover {
+      background: #b3001c;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+    }
+
+    .footer-divider {
+      height: 1px;
+      background: #999;
+      margin-bottom: 20px;
+    }
+
+    .footer-copyright {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .legal-link {
+      color: #999;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .legal-link:hover {
+      color: #fff;
+    }
+
+    /* Footer Responsive Design */
+    @media (max-width: 768px) {
+      .footer-main {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .footer-copyright {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+      
+      .footer-legal {
+        justify-content: center;
+      }
+      
+      .newsletter-input-group {
+        flex-direction: column;
+      }
+      
+      .newsletter-btn {
+        border-radius: 0 0 8px 8px;
+      }
+      
+      .newsletter-input {
+        border-radius: 8px 8px 0 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer {
+        padding: 30px 0 15px 0;
+      }
+      
+      .footer-container {
+        padding: 0 15px;
+      }
+      
+      .footer-main {
+        gap: 25px;
+      }
+      
+      .footer-title {
+        font-size: 1rem;
+      }
+      
+      .footer-description,
+      .newsletter-description {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="#" class="logo">RAKT DHARA</a>
+      <div class="nav-links">
+        <a href="check_availability.html">Check Availability</a>
+        <a href="success_stories.html">Success Stories</a>
+        <button class="signup-btn" onclick="openLoginModal()">Sign Up / Login</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" onclick="closeLoginModal()">&times;</span>
+        <h2>Welcome to RAKT DHARA</h2>
+        <p style="margin: 5px 0 0 0; opacity: 0.9;">Sign Up or Login to continue</p>
+      </div>
+      <div class="modal-body">
+        <div class="login-tabs">
+          <button class="tab-button active" onclick="switchTab('login')">Login</button>
+          <button class="tab-button" onclick="switchTab('signup')">Sign Up</button>
+        </div>
+
+        <!-- Login Tab -->
+        <div id="loginTab" class="tab-content active">
+          <form id="modalLoginForm">
+            <div class="form-group">
+              <label for="modalEmail">Email Address</label>
+              <input type="email" id="modalEmail" name="email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="modalPassword">Password</label>
+              <input type="password" id="modalPassword" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn">Login</button>
+          </form>
+
+          <!-- User Credentials Info -->
+          <div class="user-credentials">
+            <h4>🔑 Test Credentials</h4>
+            <p><strong>Admin:</strong> admin@bloodbank.com / admin123 <span class="role-badge">ADMIN</span></p>
+            <p><strong>User Dashboard:</strong> ayushman@bloodbank.com / ayushman123 <span class="role-badge">USER</span></p>
+            <p><strong>Donor:</strong> donor@test.com / donor123 <span class="role-badge">DONOR</span></p>
+            <p><strong>Requester:</strong> requester@test.com / requester123 <span class="role-badge">REQUESTER</span></p>
+          </div>
+        </div>
+
+        <!-- Sign Up Tab -->
+        <div id="signupTab" class="tab-content">
+          <form id="modalSignupForm">
+            <div class="form-group">
+              <label for="signupName">Full Name</label>
+              <input type="text" id="signupName" name="name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="signupEmail">Email Address</label>
+              <input type="email" id="signupEmail" name="email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="signupPhone">Phone Number</label>
+              <input type="tel" id="signupPhone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="signupBloodType">Blood Type</label>
+              <select id="signupBloodType" name="blood_type" required>
+                <option value="">Select Blood Type</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="signupCity">City</label>
+              <input type="text" id="signupCity" name="city" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="signupPassword">Password</label>
+              <input type="password" id="signupPassword" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn">Sign Up as Donor</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Save Lives, Donate Blood</h1>
+      <p class="hero-sub">Join our mission to save lives through blood donation. Every drop counts, every life matters.</p>
+      <div class="actions">
+        <a href="#donate" class="donate-btn">
+          <i class="fas fa-heart"></i>
+          Donate Blood
+        </a>
+        <a href="#request" class="secondary">
+          <i class="fas fa-hand-holding-heart"></i>
+          Request Blood
+        </a>
+      </div>
+      <div class="counters">
+        <div><span id="totalDonors">0</span> Donors</div>
+        <div><span id="totalRequests">0</span> Requests</div>
+        <div><span id="livesSaved">0</span> Lives Saved</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated Benefits Section with Medical Images -->
+  <section class="animated-benefits">
+    <div class="benefits-container">
+      <h2>Benefits of Blood Donation</h2>
+      <div class="benefits-railway">
+        <div class="benefits-connector"></div>
+        <div class="benefits-connector secondary"></div>
+        <div class="benefits-track" id="train">
+        <!-- Original slides that will be cloned by JavaScript -->
+        <div class="benefit-slide">
+          <div class="benefit-image">
+            <div class="syringe-icon">💉</div>
+            <div class="benefit-content">
+              <h3>Free Health Checkup</h3>
+              <p>Complete screening including hemoglobin and BP</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="benefit-slide">
+          <div class="benefit-image">
+            <div class="syringe-icon">❤️</div>
+            <div class="benefit-content">
+              <h3>Reduces Heart Risk</h3>
+              <p>Helps maintain healthy iron levels</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="benefit-slide">
+          <div class="benefit-image">
+            <div class="syringe-icon">🔥</div>
+            <div class="benefit-content">
+              <h3>Burns Calories</h3>
+              <p>One donation burns ~650 calories</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="benefit-slide">
+          <div class="benefit-image">
+            <div class="syringe-icon">🧬</div>
+            <div class="benefit-content">
+              <h3>Stimulates Blood</h3>
+              <p>Promotes new blood cell production</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="benefit-slide">
+          <div class="benefit-image">
+            <div class="syringe-icon">🏅</div>
+            <div class="benefit-content">
+              <h3>Community Recognition</h3>
+              <p>Appreciation certificates and badges</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="benefit-slide">
+          <div class="benefit-image">
+            <div class="syringe-icon">💖</div>
+            <div class="benefit-content">
+              <h3>Psychological Benefits</h3>
+              <p>Feel the joy of saving lives</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="benefit-slide">
+          <div class="benefit-image">
+            <div class="syringe-icon">🩸</div>
+            <div class="benefit-content">
+              <h3>Save 3 Lives</h3>
+              <p>One donation can help accident victims, surgeries, or patients in need</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="benefit-slide">
+          <div class="benefit-image">
+            <div class="syringe-icon">😊</div>
+            <div class="benefit-content">
+              <h3>Boosts Your Mood</h3>
+              <p>Donating blood releases feel-good hormones like dopamine</p>
+            </div>
+          </div>
+        </div>
+        <!-- Duplicate slides for seamless left-to-right loop (kept) -->
+        <!-- Additional duplicate slides are in the original code for infinite scrolling effect -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Forms Container -->
+  <div class="forms-container">
+    <!-- Donor Registration Form -->
+    <section id="donate" class="form-container">
+      <div class="header">
+        <h2>Become a Blood Donor</h2>
+        <p>Register as a blood donor and help save lives</p>
+      </div>
+      
+      <form id="donorForm">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="blood_type">Blood Type</label>
+          <select id="blood_type" name="blood_type" required>
+            <option value="">Select Blood Type</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" id="city" name="city" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        
+        <button type="submit" class="btn">Register as Donor</button>
+      </form>
+    </section>
+
+    <!-- Blood Request Form -->
+    <section id="request" class="form-container">
+      <div class="header">
+        <h2>Request Blood</h2>
+        <p>Submit a blood request for emergency needs</p>
+      </div>
+      
+      <form id="simpleBloodRequestForm">
+        <div class="form-group">
+          <label for="simple_name">Your Name</label>
+          <input type="text" id="simple_name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="simple_email">Email</label>
+          <input type="email" id="simple_email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="simple_phone">Phone Number</label>
+          <input type="tel" id="simple_phone" name="phone" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="simple_blood_type">Blood Type Required</label>
+          <select id="simple_blood_type" name="blood_type" required>
+            <option value="">Select Blood Type</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="simple_city">City</label>
+          <input type="text" id="simple_city" name="city" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="simple_message">Message (Optional)</label>
+          <textarea id="simple_message" name="message" rows="3" placeholder="Tell us more about your blood request..."></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit Blood Request</button>
+      </form>
+    </section>
+  </div>
+
+  <!-- Certificate Generation Section -->
+  <section id="certificate" class="certificate-section">
+    <h3>🏆 Certificate Generation</h3>
+    <p>Enter your Certificate ID to generate your blood donation certificate</p>
+    
+    <div style="max-width: 400px; margin: 0 auto;">
+      <div class="form-group">
+        <label for="certificateId">Certificate ID</label>
+        <input type="text" id="certificateId" placeholder="Enter your Certificate ID (e.g., BD-2024-001)" 
+               style="text-align: center; letter-spacing: 1px;">
+      </div>
+      
+      <button type="button" id="generateCertBtn" onclick="generateCertificate()" class="btn">
+        🏆 Generate Certificate
+      </button>
+      
+      <div id="certificateResult" style="margin-top: 20px; text-align: center; display: none;">
+        <!-- Certificate generation result will be displayed here -->
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Admin Link -->
+  <div class="admin-link">
+    <a href="/admin">Admin Dashboard</a>
+  </div>
+
+  <!-- Sticky Donate Button (Mobile) -->
+  <div class="sticky-donate">
+    <button onclick="document.getElementById('donate').scrollIntoView()">
+      <i class="fas fa-heart"></i>
+      Donate Now
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Main Footer Content -->
+      <div class="footer-main">
+        <!-- RAKT DHARA Column -->
+        <div class="footer-column">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <div class="logo-icon">🩸</div>
+              <h3>RAKT DHARA</h3>
+            </div>
+            <p class="footer-description">
+              India's first student-built blood bank platform connecting donors with patients in need. Making blood donation as simple as ordering food online.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links Column -->
+        <div class="footer-column">
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">How It Works</a></li>
+            <li><a href="check_availability.html" class="footer-link">Check Availability</a></li>
+            <li><a href="success_stories.html" class="footer-link">Success Stories</a></li>
+            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="#" class="footer-link">Privacy Policy</a></li>
+            <li><a href="#" class="footer-link">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info Column -->
+        <div class="footer-column">
+          <h4 class="footer-title">Contact Info</h4>
+          <ul class="footer-contact">
+            <li class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span>Emergency: 1800-BLOOD-HELP</span>
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>support@raktdhara.in</span>
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>DKTE, ICHALKARANJI</span>
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-clock"></i>
+              <span>24/7 Emergency Service</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Column -->
+        <div class="footer-column">
+          <h4 class="footer-title">Newsletter</h4>
+          <p class="newsletter-description">
+            Stay updated with our latest blood donation drives and events.
+          </p>
+          <form class="newsletter-form">
+            <div class="newsletter-input-group">
+              <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-divider"></div>
+        <div class="footer-copyright">
+          <span>© 2025 RAKT DHARA. All rights reserved.</span>
+          <div class="footer-legal">
+            <a href="#" class="legal-link">Privacy Policy</a>
+            <a href="#" class="legal-link">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const API_BASE = window.location.origin + '/api';
+
+    // Modal Functions
+    function openLoginModal() {
+      document.getElementById('loginModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function switchTab(tabName) {
+      // Remove active class from all tabs and content
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      // Add active class to selected tab and content
+      event.target.classList.add('active');
+      document.getElementById(tabName + 'Tab').classList.add('active');
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('loginModal');
+      if (event.target === modal) {
+        closeLoginModal();
+      }
+    }
+
+    // Show alert function
+    function showAlert(message, type = 'success') {
+      // Remove existing alerts
+      const existingAlerts = document.querySelectorAll('.alert');
+      existingAlerts.forEach(alert => alert.remove());
+
+      // Create new alert
+      const alert = document.createElement('div');
+      alert.className = `alert alert-${type}`;
+      alert.textContent = message;
+      
+      // Insert at the top of the body
+      document.body.insertBefore(alert, document.body.firstChild);
+      
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        alert.remove();
+      }, 5000);
+    }
+
+    // Load dashboard stats
+    // Animated counter function
+    function animateCounter(elementId, targetValue, duration) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      const startValue = 0;
+      const startTime = performance.now();
+      let lastValue = 0;
+      
+      function updateCounter(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function for smooth animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const currentValue = Math.floor(startValue + (targetValue - startValue) * easeOutQuart);
+        
+        // Add pulse effect when value changes
+        if (currentValue !== lastValue) {
+          element.classList.add('animating');
+          setTimeout(() => element.classList.remove('animating'), 100);
+          lastValue = currentValue;
+        }
+        
+        element.textContent = currentValue;
+        
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        } else {
+          element.textContent = targetValue; // Ensure final value is exact
+          element.classList.add('animating');
+          setTimeout(() => element.classList.remove('animating'), 100);
+        }
+      }
+      
+      requestAnimationFrame(updateCounter);
+    }
+
+    async function loadDashboardStats() {
+      try {
+        const response = await fetch(`${API_BASE}/dashboard/stats`);
+        const stats = await response.json();
+        
+        // Animate counters from 0 to target values
+        animateCounter('totalDonors', stats.total_donors || 0, 2000);
+        animateCounter('totalRequests', stats.total_requests || 0, 2000);
+        animateCounter('livesSaved', stats.lives_saved || 0, 2000);
+      } catch (error) {
+        console.error('Failed to load stats:', error);
+      }
+    }
+
+    // Donor Registration
+    document.getElementById('donorForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Get form elements directly
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const blood_type = document.getElementById('blood_type').value;
+      const city = document.getElementById('city').value.trim();
+      const password = document.getElementById('password').value;
+      
+      // Client-side validation
+      if (!name || !email || !phone || !blood_type || !city || !password) {
+        showAlert('Please fill in all required fields', 'error');
+        return;
+      }
+      
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showAlert('Please enter a valid email address', 'error');
+        return;
+      }
+      
+      // Phone validation
+      if (phone.length < 10) {
+        showAlert('Please enter a valid phone number (at least 10 digits)', 'error');
+        return;
+      }
+      
+      // Prepare data object
+      const data = {
+        name: name,
+        email: email,
+        phone: phone,
+        blood_type: blood_type,
+        city: city,
+        password: password
+      };
+      
+      try {
+        const response = await fetch(`${API_BASE}/donors`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        
+        // Check if response is ok
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          showAlert('Donor registered successfully! Certificate ID: ' + result.certificate_id);
+          e.target.reset();
+          loadDashboardStats(); // Refresh stats
+        } else {
+          if (result.message === 'Email already exists') {
+            showAlert('This email is already registered. Please use a different email address.', 'error');
+            // Focus on email field for easy correction
+            document.getElementById('email').focus();
+            document.getElementById('email').select();
+          } else {
+            showAlert('Error: ' + result.message, 'error');
+          }
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        showAlert('Failed to register donor: ' + error.message, 'error');
+      }
+    });
+
+    // Simple Blood Request Form
+    document.getElementById('simpleBloodRequestForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      
+      // Client-side validation
+      if (!data.name || !data.email || !data.phone || !data.blood_type || !data.city) {
+        showAlert('Please fill in all required fields', 'error');
+        return;
+      }
+      
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) {
+        showAlert('Please enter a valid email address', 'error');
+        return;
+      }
+      
+      // Phone validation
+      if (data.phone.length < 10) {
+        showAlert('Please enter a valid phone number (at least 10 digits)', 'error');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${API_BASE}/blood_requests`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        
+        // Check if response is ok
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+        
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          const text = await response.text();
+          throw new Error(`Expected JSON but got: ${text.substring(0, 100)}...`);
+        }
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          showAlert('Blood request submitted successfully! Request ID: ' + result.request_id, 'success');
+          e.target.reset();
+          loadDashboardStats(); // Refresh stats
+        } else {
+          showAlert('Error: ' + result.message, 'error');
+        }
+      } catch (error) {
+        console.error('Blood request submission error:', error);
+        showAlert('Failed to submit blood request: ' + error.message, 'error');
+      }
+    });
+
+    // Certificate Generation Function
+    async function generateCertificate() {
+      const certificateId = document.getElementById('certificateId').value.trim();
+      const resultDiv = document.getElementById('certificateResult');
+      const generateBtn = document.getElementById('generateCertBtn');
+      
+      if (!certificateId) {
+        showAlert('Please enter a Certificate ID', 'error');
+        return;
+      }
+      
+      // Show loading state
+      generateBtn.innerHTML = '🔄 Searching...';
+      generateBtn.disabled = true;
+      resultDiv.style.display = 'none';
+      
+      try {
+        // Step 1: Search for donor by certificate ID
+        const searchResponse = await fetch(`${API_BASE}/donors/search?q=${encodeURIComponent(certificateId)}`);
+        const searchResults = await searchResponse.json();
+        
+        if (!searchResults || searchResults.length === 0) {
+          throw new Error('Certificate ID not found. Please check your Certificate ID and try again.');
+        }
+        
+        // Step 2: Find the donor with matching certificate ID
+        const donor = searchResults.find(d => d.certificate_id === certificateId);
+        if (!donor) {
+          throw new Error('Certificate ID not found. Please check your Certificate ID and try again.');
+        }
+        
+        // Step 3: Generate certificate
+        generateBtn.innerHTML = '🏆 Generating Certificate...';
+        
+        // Open certificate page with donor data
+        const certificateUrl = `/professional-certificate?certificate=${certificateId}&name=${encodeURIComponent(donor.name)}&blood_type=${donor.blood_type}&date=${new Date().toISOString().split('T')[0]}`;
+        window.open(certificateUrl, '_blank');
+        
+        // Show success message
+        resultDiv.innerHTML = `
+          <div style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #155724;">✅ Certificate Generated Successfully!</h4>
+            <p style="margin: 0; font-size: 14px;">
+              <strong>Donor:</strong> ${donor.name}<br>
+              <strong>Certificate ID:</strong> ${donor.certificate_id}<br>
+              <strong>Blood Type:</strong> ${donor.blood_type}
+            </p>
+          </div>
+        `;
+        resultDiv.style.display = 'block';
+        
+        // Clear the input
+        document.getElementById('certificateId').value = '';
+        
+      } catch (error) {
+        console.error('Certificate generation error:', error);
+        resultDiv.innerHTML = `
+          <div style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #721c24;">❌ Error</h4>
+            <p style="margin: 0; font-size: 14px;">${error.message}</p>
+          </div>
+        `;
+        resultDiv.style.display = 'block';
+      } finally {
+        // Reset button state
+        generateBtn.innerHTML = '🏆 Generate Certificate';
+        generateBtn.disabled = false;
+      }
+    }
+
+    // Allow Enter key to trigger certificate generation
+    document.getElementById('certificateId').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        generateCertificate();
+      }
+    });
+
+
+    // Modal Login Form
+    document.getElementById('modalLoginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        // Check if this looks like an admin login (email contains 'admin' or specific admin emails)
+        const isAdminLogin = data.email.toLowerCase().includes('admin') || 
+                           data.email === 'admin@bloodbank.com';
+        
+        if (isAdminLogin) {
+          // Try admin login first for admin-looking emails
+          const adminResponse = await fetch(`${API_BASE}/admin/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+          
+          const adminResult = await adminResponse.json();
+          
+          if (adminResult.success) {
+            showAlert('Admin login successful! Redirecting to admin dashboard...', 'success');
+            closeLoginModal();
+            setTimeout(() => {
+              window.location.href = '/admin';
+            }, 1500);
+            return;
+          }
+        }
+        
+        // Try user login
+        const userResponse = await fetch(`${API_BASE}/user/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        
+        const userResult = await userResponse.json();
+        
+        if (userResult.success) {
+          // Prefer requester dashboard if requester exists
+          closeLoginModal();
+          if (userResult.requester) {
+            showAlert('Login successful! Redirecting to requester dashboard...', 'success');
+            localStorage.setItem('requesterId', userResult.requester.id);
+            localStorage.setItem('requesterEmail', userResult.requester.email);
+            setTimeout(() => { window.location.href = '/requester_dashboard.html'; }, 1200);
+            return;
+          }
+          if (userResult.donor) {
+            showAlert('Login successful! Redirecting to user dashboard...', 'success');
+            localStorage.setItem('userId', userResult.donor.id);
+            setTimeout(() => { window.location.href = `/user-dashboard?id=${userResult.donor.id}`; }, 1200);
+            return;
+          }
+        }
+        
+        // If user login fails and we haven't tried admin yet, try admin login
+        if (!isAdminLogin) {
+          const adminResponse = await fetch(`${API_BASE}/admin/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+          
+          const adminResult = await adminResponse.json();
+          
+          if (adminResult.success) {
+            showAlert('Admin login successful! Redirecting to admin dashboard...', 'success');
+            closeLoginModal();
+            setTimeout(() => {
+              window.location.href = '/admin';
+            }, 1500);
+            return;
+          }
+        }
+        
+        // If both logins failed
+        showAlert('Login failed: Invalid credentials', 'error');
+      } catch (error) {
+        showAlert('Login failed: ' + error.message, 'error');
+      }
+    });
+
+    // Modal Signup Form
+    document.getElementById('modalSignupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Get form elements directly
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const phone = document.getElementById('signupPhone').value.trim();
+      const blood_type = document.getElementById('signupBloodType').value;
+      const city = document.getElementById('signupCity').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      
+      // Client-side validation
+      if (!name || !email || !phone || !blood_type || !city || !password) {
+        showAlert('Please fill in all required fields', 'error');
+        return;
+      }
+      
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showAlert('Please enter a valid email address', 'error');
+        return;
+      }
+      
+      // Phone validation
+      if (phone.length < 10) {
+        showAlert('Please enter a valid phone number (at least 10 digits)', 'error');
+        return;
+      }
+      
+      // Prepare data object
+      const data = {
+        name: name,
+        email: email,
+        phone: phone,
+        blood_type: blood_type,
+        city: city,
+        password: password
+      };
+      
+      try {
+        const response = await fetch(`${API_BASE}/donors`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        
+        // Check if response is ok
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          showAlert('Donor registered successfully! Certificate ID: ' + result.certificate_id, 'success');
+          e.target.reset();
+          closeLoginModal();
+          loadDashboardStats(); // Refresh stats
+        } else {
+          if (result.message === 'Email already exists') {
+            showAlert('This email is already registered. Please use a different email address.', 'error');
+            // Focus on email field for easy correction
+            document.getElementById('signupEmail').focus();
+            document.getElementById('signupEmail').select();
+          } else {
+            showAlert('Error: ' + result.message, 'error');
+          }
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        showAlert('Failed to register donor: ' + error.message, 'error');
+      }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Load stats on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadDashboardStats();
+    });
+  </script>
+</body>
+</html>

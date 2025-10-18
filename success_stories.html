@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success Stories - RAKT DHARA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #e60023;
+      --secondary: #1976d2;
+      --background: #f6f8fa;
+      --surface: #fff;
+      --text-main: #222;
+      --text-light: #fff;
+      --text-secondary: #1976d2;
+      --success: #43a047;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --spacing: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: var(--background);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* Page Header */
+    .page-header {
+      background: #ffffff;
+      color: #111;
+      padding: 28px 0 24px 0;
+      text-align: center;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.04);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    /* Remove old shimmer overlay */
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-content h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #e60023;
+      animation: fadeInUp 0.6s ease-out;
+      text-shadow: none;
+    }
+
+    .header-content p {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      opacity: 0.8;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header-nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease-out 0.4s both;
+    }
+
+    .nav-link {
+      color: #333;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #e6e8eb;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav-link:hover::before {
+      left: 100%;
+    }
+
+    .nav-link:hover {
+      background: #f6f8fa;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    .nav-link.active {
+      background: #e60023;
+      color: #fff;
+      border-color: #e60023;
+      box-shadow: 0 6px 18px rgba(230,0,35,0.25);
+    }
+
+    .dashboard-btn {
+      background: #111;
+      color: #fff;
+      border: 1px solid #111;
+    }
+
+    .dashboard-btn:hover {
+      background: #000;
+      border-color: #000;
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-main);
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Success Stories Grid */
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .story-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--success);
+    }
+
+    .story-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .story-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .story-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--success), #2e7d32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-right: 1rem;
+    }
+
+    .story-info h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .story-info p {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .story-content {
+      margin-bottom: 1.5rem;
+    }
+
+    .story-quote {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .story-quote::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      top: -10px;
+      font-size: 3rem;
+      color: var(--success);
+      font-family: serif;
+    }
+
+    .story-details {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .story-details h4 {
+      color: var(--primary);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .story-details p {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+    }
+
+    .story-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-main);
+      opacity: 0.7;
+    }
+
+    /* Call to Action */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary), #c41e3a);
+      color: var(--text-light);
+      padding: 3rem 2rem;
+      border-radius: var(--radius);
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .cta-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cta-subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn {
+      background: var(--text-light);
+      color: var(--primary);
+      padding: 15px 30px;
+      border-radius: 25px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    .cta-btn.secondary {
+      background: transparent;
+      color: var(--text-light);
+      border: 2px solid var(--text-light);
+    }
+
+    .cta-btn.secondary:hover {
+      background: var(--text-light);
+      color: var(--primary);
+    }
+
+    /* NGO Partnership Section */
+    .ngo-section {
+      background: #f8f9fa;
+      padding: 4rem 0;
+      margin: 3rem 0;
+    }
+
+    .ngo-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .ngo-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .ngo-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-main);
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .ngo-forms-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .ngo-form-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--secondary);
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .form-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--secondary), #1565c0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      color: white;
+      font-size: 2rem;
+    }
+
+    .form-header h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-header p {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .ngo-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, var(--secondary), #1565c0);
+      color: var(--text-light);
+      padding: 15px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(25, 118, 210, 0.3);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Alert Messages */
+    .alert {
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    .alert.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .stories-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ngo-forms-container {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .ngo-title {
+        font-size: 2rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .cta-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+    }
+
+    /* Footer Styles */
+    .footer {
+      background: #8f8f8f;
+      color: #fff;
+      padding: 40px 0 20px 0;
+      margin-top: 60px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .footer-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-icon {
+      font-size: 1.5rem;
+      color: #e60023;
+    }
+
+    .footer-logo h3 {
+      color: #e60023;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .footer-description {
+      color: #1976d2;
+      line-height: 1.6;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #e60023;
+      color: #fff;
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #b3001c;
+      transform: translateY(-2px);
+    }
+
+    .footer-title {
+      color: #e60023;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-link {
+      color: #1976d2;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-link:hover {
+      color: #fff;
+    }
+
+    .footer-link::before {
+      content: "■";
+      font-size: 0.6rem;
+      color: #e60023;
+    }
+
+    .footer-contact {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1976d2;
+      font-size: 0.95rem;
+    }
+
+    .contact-item i {
+      color: #e60023;
+      width: 16px;
+      text-align: center;
+    }
+
+    .newsletter-description {
+      color: #1976d2;
+      line-height: 1.6;
+      margin: 0 0 20px 0;
+      font-size: 0.95rem;
+    }
+
+    .newsletter-form {
+      margin-top: 10px;
+    }
+
+    .newsletter-input-group {
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      background: #fff;
+      color: #333;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .newsletter-input::placeholder {
+      color: #999;
+    }
+
+    .newsletter-btn {
+      background: #e60023;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .newsletter-btn:hover {
+      background: #b3001c;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+    }
+
+    .footer-divider {
+      height: 1px;
+      background: #999;
+      margin-bottom: 20px;
+    }
+
+    .footer-copyright {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .legal-link {
+      color: #999;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .legal-link:hover {
+      color: #fff;
+    }
+
+    /* Footer Responsive Design */
+    @media (max-width: 768px) {
+      .footer-main {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .footer-copyright {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+      
+      .footer-legal {
+        justify-content: center;
+      }
+      
+      .newsletter-input-group {
+        flex-direction: column;
+      }
+      
+      .newsletter-btn {
+        border-radius: 0 0 8px 8px;
+      }
+      
+      .newsletter-input {
+        border-radius: 8px 8px 0 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer {
+        padding: 30px 0 15px 0;
+      }
+      
+      .footer-container {
+        padding: 0 15px;
+      }
+      
+      .footer-main {
+        gap: 25px;
+      }
+      
+      .footer-title {
+        font-size: 1rem;
+      }
+      
+      .footer-description,
+      .newsletter-description {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>🩸 RAKT DHARA</h1>
+      <p>Success Stories & Impact</p>
+      <div class="header-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/check_availability.html" class="nav-link">Check Availability</a>
+        <a href="/success_stories.html" class="nav-link active">Success Stories</a>
+        <a href="/user-dashboard" class="nav-link dashboard-btn">Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1 class="page-title">Success Stories</h1>
+      <p class="page-subtitle">
+        Real stories of hope, courage, and life-saving moments made possible through blood donation. 
+        Every drop counts, every story matters.
+      </p>
+    </div>
+
+    <!-- Success Stories Grid -->
+    <div class="stories-grid">
+      <!-- Story 1 -->
+      <div class="story-card">
+        <div class="story-header">
+          <div class="story-avatar">SM</div>
+          <div class="story-info">
+            <h3>Sarah Mitchell</h3>
+            <p>Accident Survivor</p>
+          </div>
+        </div>
+        <div class="story-content">
+          <div class="story-quote">
+            "I was in a car accident and lost a lot of blood. Thanks to the quick response of RAKT DHARA and the generous donors, I'm alive today. My family and I are forever grateful."
+          </div>
+          <div class="story-details">
+            <h4>Emergency Details</h4>
+            <p><strong>Blood Type Needed:</strong> O+</p>
+            <p><strong>Units Required:</strong> 3 units</p>
+            <p><strong>Response Time:</strong> 15 minutes</p>
+            <p><strong>Location:</strong> City Hospital</p>
+          </div>
+        </div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Lives Saved</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">15</div>
+            <div class="stat-label">Minutes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Recovery</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Story 2 -->
+      <div class="story-card">
+        <div class="story-header">
+          <div class="story-avatar">RJ</div>
+          <div class="story-info">
+            <h3>Rajesh Kumar</h3>
+            <p>Cancer Patient</p>
+          </div>
+        </div>
+        <div class="story-content">
+          <div class="story-quote">
+            "During my chemotherapy treatment, I needed multiple blood transfusions. The donors through RAKT DHARA gave me strength to fight cancer. Today I'm cancer-free and a regular donor myself."
+          </div>
+          <div class="story-details">
+            <h4>Treatment Details</h4>
+            <p><strong>Blood Type Needed:</strong> A+</p>
+            <p><strong>Units Required:</strong> 8 units</p>
+            <p><strong>Treatment Duration:</strong> 6 months</p>
+            <p><strong>Outcome:</strong> Complete Recovery</p>
+          </div>
+        </div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Units Used</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">6</div>
+            <div class="stat-label">Months</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">5</div>
+            <div class="stat-label">Donations Made</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Story 3 -->
+      <div class="story-card">
+        <div class="story-header">
+          <div class="story-avatar">AP</div>
+          <div class="story-info">
+            <h3>Anita Patel</h3>
+            <p>New Mother</p>
+          </div>
+        </div>
+        <div class="story-content">
+          <div class="story-quote">
+            "I had complications during childbirth and needed an emergency blood transfusion. Thanks to the donors, both my baby and I are healthy. Every mother should know about RAKT DHARA."
+          </div>
+          <div class="story-details">
+            <h4>Emergency Details</h4>
+            <p><strong>Blood Type Needed:</strong> B+</p>
+            <p><strong>Units Required:</strong> 2 units</p>
+            <p><strong>Emergency Type:</strong> Childbirth</p>
+            <p><strong>Hospital:</strong> Maternity Center</p>
+          </div>
+        </div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-value">2</div>
+            <div class="stat-label">Lives Saved</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">20</div>
+            <div class="stat-label">Minutes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Success</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Story 4 -->
+      <div class="story-card">
+        <div class="story-header">
+          <div class="story-avatar">MK</div>
+          <div class="story-info">
+            <h3>Michael Johnson</h3>
+            <p>Surgery Patient</p>
+          </div>
+        </div>
+        <div class="story-content">
+          <div class="story-quote">
+            "I needed heart surgery and required blood during the procedure. The efficient system at RAKT DHARA ensured I had the blood I needed. The surgery was successful, and I'm back to my normal life."
+          </div>
+          <div class="story-details">
+            <h4>Surgery Details</h4>
+            <p><strong>Blood Type Needed:</strong> AB+</p>
+            <p><strong>Units Required:</strong> 4 units</p>
+            <p><strong>Surgery Type:</strong> Heart Surgery</p>
+            <p><strong>Duration:</strong> 6 hours</p>
+          </div>
+        </div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-value">4</div>
+            <div class="stat-label">Units Used</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">6</div>
+            <div class="stat-label">Hours</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Recovery</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Story 5 -->
+      <div class="story-card">
+        <div class="story-header">
+          <div class="story-avatar">PS</div>
+          <div class="story-info">
+            <h3>Priya Sharma</h3>
+            <p>Thalassemia Patient</p>
+          </div>
+        </div>
+        <div class="story-content">
+          <div class="story-quote">
+            "As a thalassemia patient, I need regular blood transfusions. RAKT DHARA has been my lifeline for the past 3 years. The donors are my heroes, giving me the gift of life every month."
+          </div>
+          <div class="story-details">
+            <h4>Treatment Details</h4>
+            <p><strong>Blood Type Needed:</strong> O-</p>
+            <p><strong>Frequency:</strong> Monthly</p>
+            <p><strong>Duration:</strong> 3 years</p>
+            <p><strong>Total Units:</strong> 36 units</p>
+          </div>
+        </div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-value">36</div>
+            <div class="stat-label">Units Used</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Years</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Donors</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Story 6 -->
+      <div class="story-card">
+        <div class="story-header">
+          <div class="story-avatar">DG</div>
+          <div class="story-info">
+            <h3>David Garcia</h3>
+            <p>Burn Victim</p>
+          </div>
+        </div>
+        <div class="story-content">
+          <div class="story-quote">
+            "After a severe burn accident, I needed multiple surgeries and blood transfusions. The support from RAKT DHARA donors helped me through the toughest time of my life. I'm grateful beyond words."
+          </div>
+          <div class="story-details">
+            <h4>Treatment Details</h4>
+            <p><strong>Blood Type Needed:</strong> A-</p>
+            <p><strong>Units Required:</strong> 6 units</p>
+            <p><strong>Surgeries:</strong> 4 procedures</p>
+            <p><strong>Recovery Time:</strong> 8 months</p>
+          </div>
+        </div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-value">6</div>
+            <div class="stat-label">Units Used</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">4</div>
+            <div class="stat-label">Surgeries</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Months</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NGO Partnership Section -->
+    <div class="ngo-section">
+      <div class="ngo-header">
+        <h2 class="ngo-title">Partner with RAKT DHARA</h2>
+        <p class="ngo-subtitle">
+          Join hands with us to organize blood donation awareness campaigns. 
+          Together, we can save more lives and create a healthier community.
+        </p>
+      </div>
+
+      <div class="ngo-forms-container">
+        <!-- Education Organization Form -->
+        <div class="ngo-form-card">
+          <div class="form-header">
+            <div class="form-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Education Organizations</h3>
+            <p>Schools, Colleges, Universities</p>
+          </div>
+          <form id="educationForm" class="ngo-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="edu_org_name">Organization Name *</label>
+                <input type="text" id="edu_org_name" name="organization_name" placeholder="e.g., DKTE College of Engineering" required>
+              </div>
+              <div class="form-group">
+                <label for="edu_contact_person">Contact Person *</label>
+                <input type="text" id="edu_contact_person" name="contact_person" placeholder="Full name" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="edu_email">Email *</label>
+                <input type="email" id="edu_email" name="email" placeholder="name@organization.edu" required>
+              </div>
+              <div class="form-group">
+                <label for="edu_phone">Phone *</label>
+                <input type="tel" id="edu_phone" name="phone" placeholder="10-digit mobile" pattern="^[0-9]{10}$" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="edu_address">Address *</label>
+              <textarea id="edu_address" name="address" rows="2" placeholder="Campus address" required></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="edu_city">City *</label>
+                <input type="text" id="edu_city" name="city" placeholder="City" required>
+              </div>
+              <div class="form-group">
+                <label for="edu_state">State *</label>
+                <input type="text" id="edu_state" name="state" placeholder="State" required>
+              </div>
+              <div class="form-group">
+                <label for="edu_pincode">Pincode *</label>
+                <input type="text" id="edu_pincode" name="pincode" placeholder="6-digit pincode" pattern="^[0-9]{6}$" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="edu_size">Organization Size *</label>
+                <select id="edu_size" name="organization_size" required>
+                  <option value="">Select Size</option>
+                  <option value="Small">Small (1-100 students)</option>
+                  <option value="Medium">Medium (100-500 students)</option>
+                  <option value="Large">Large (500+ students)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="edu_participants">Expected Participants *</label>
+                <input type="number" id="edu_participants" name="expected_participants" min="1" placeholder="e.g., 150" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="edu_campaign">Campaign Description *</label>
+              <textarea id="edu_campaign" name="campaign_description" rows="3" 
+                placeholder="Describe your blood donation awareness campaign plans..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="edu_dates">Preferred Dates (Optional)</label>
+              <input type="text" id="edu_dates" name="preferred_dates" placeholder="e.g., 15-20 Nov 2025">
+            </div>
+
+            <input type="hidden" name="organization_type" value="Education">
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-paper-plane"></i>
+              Submit Partnership Request
+            </button>
+          </form>
+        </div>
+
+        <!-- Corporate Organization Form -->
+        <div class="ngo-form-card">
+          <div class="form-header">
+            <div class="form-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <h3>Corporate Organizations</h3>
+            <p>Companies, Corporations, Businesses</p>
+          </div>
+          <form id="corporateForm" class="ngo-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="corp_org_name">Organization Name *</label>
+                <input type="text" id="corp_org_name" name="organization_name" placeholder="e.g., Acme Pvt Ltd" required>
+              </div>
+              <div class="form-group">
+                <label for="corp_contact_person">Contact Person *</label>
+                <input type="text" id="corp_contact_person" name="contact_person" placeholder="Full name" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="corp_email">Email *</label>
+                <input type="email" id="corp_email" name="email" placeholder="name@company.com" required>
+              </div>
+              <div class="form-group">
+                <label for="corp_phone">Phone *</label>
+                <input type="tel" id="corp_phone" name="phone" placeholder="10-digit mobile" pattern="^[0-9]{10}$" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="corp_address">Address *</label>
+              <textarea id="corp_address" name="address" rows="2" placeholder="Office address" required></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="corp_city">City *</label>
+                <input type="text" id="corp_city" name="city" placeholder="City" required>
+              </div>
+              <div class="form-group">
+                <label for="corp_state">State *</label>
+                <input type="text" id="corp_state" name="state" placeholder="State" required>
+              </div>
+              <div class="form-group">
+                <label for="corp_pincode">Pincode *</label>
+                <input type="text" id="corp_pincode" name="pincode" placeholder="6-digit pincode" pattern="^[0-9]{6}$" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="corp_size">Organization Size *</label>
+                <select id="corp_size" name="organization_size" required>
+                  <option value="">Select Size</option>
+                  <option value="Small">Small (1-50 employees)</option>
+                  <option value="Medium">Medium (50-200 employees)</option>
+                  <option value="Large">Large (200+ employees)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="corp_participants">Expected Participants *</label>
+                <input type="number" id="corp_participants" name="expected_participants" min="1" placeholder="e.g., 75" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="corp_campaign">Campaign Description *</label>
+              <textarea id="corp_campaign" name="campaign_description" rows="3" 
+                placeholder="Describe your blood donation awareness campaign plans..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="corp_dates">Preferred Dates (Optional)</label>
+              <input type="text" id="corp_dates" name="preferred_dates" placeholder="e.g., 10-12 Dec 2025">
+            </div>
+
+            <input type="hidden" name="organization_type" value="Corporate">
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-paper-plane"></i>
+              Submit Partnership Request
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="cta-section">
+      <h2 class="cta-title">Be Part of These Success Stories</h2>
+      <p class="cta-subtitle">
+        Your blood donation can save lives and create more success stories. 
+        Join our community of heroes today!
+      </p>
+      <div class="cta-buttons">
+        <a href="/#donate" class="cta-btn">
+          <i class="fas fa-heart"></i>
+          Donate Blood
+        </a>
+        <a href="/check_availability.html" class="cta-btn secondary">
+          <i class="fas fa-search"></i>
+          Check Availability
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const API_BASE = window.location.origin + '/api';
+
+    // Form submission handlers
+    document.getElementById('educationForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await submitNGOForm(e.target, 'education');
+    });
+
+    document.getElementById('corporateForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await submitNGOForm(e.target, 'corporate');
+    });
+
+    async function submitNGOForm(form, type) {
+      const submitBtn = form.querySelector('.submit-btn');
+      const originalText = submitBtn.innerHTML;
+      
+      // Show loading state
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+      submitBtn.disabled = true;
+
+      try {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        // Convert expected_participants to number
+        data.expected_participants = parseInt(data.expected_participants);
+
+        const response = await fetch(`${API_BASE}/ngo/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showAlert(form, 'success', 'Partnership request submitted successfully! We will contact you soon.');
+          form.reset();
+        } else {
+          showAlert(form, 'error', 'Failed to submit request: ' + result.error);
+        }
+
+      } catch (error) {
+        console.error('Error submitting NGO form:', error);
+        showAlert(form, 'error', 'Failed to submit request. Please try again.');
+      } finally {
+        // Reset button state
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }
+    }
+
+    function showAlert(form, type, message) {
+      // Remove existing alerts
+      const existingAlert = form.querySelector('.alert');
+      if (existingAlert) {
+        existingAlert.remove();
+      }
+
+      // Create new alert
+      const alert = document.createElement('div');
+      alert.className = `alert ${type}`;
+      alert.textContent = message;
+      alert.style.display = 'block';
+
+      // Insert alert at the top of the form
+      form.insertBefore(alert, form.firstChild);
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        if (alert.parentNode) {
+          alert.remove();
+        }
+      }, 5000);
+    }
+
+    // Form validation
+    function validateForm(form) {
+      const requiredFields = form.querySelectorAll('[required]');
+      let isValid = true;
+
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = '#e74c3c';
+          isValid = false;
+        } else {
+          field.style.borderColor = '#e0e0e0';
+        }
+      });
+
+      return isValid;
+    }
+
+    // Add real-time validation
+    document.querySelectorAll('.ngo-form input, .ngo-form select, .ngo-form textarea').forEach(field => {
+      field.addEventListener('blur', function() {
+        if (this.hasAttribute('required') && !this.value.trim()) {
+          this.style.borderColor = '#e74c3c';
+        } else {
+          this.style.borderColor = '#e0e0e0';
+        }
+      });
+
+      field.addEventListener('input', function() {
+        if (this.style.borderColor === 'rgb(231, 76, 60)') {
+          this.style.borderColor = '#e0e0e0';
+        }
+      });
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Main Footer Content -->
+      <div class="footer-main">
+        <!-- RAKT DHARA Column -->
+        <div class="footer-column">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <div class="logo-icon">🩸</div>
+              <h3>RAKT DHARA</h3>
+            </div>
+            <p class="footer-description">
+              India's first student-built blood bank platform connecting donors with patients in need. Making blood donation as simple as ordering food online.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links Column -->
+        <div class="footer-column">
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">How It Works</a></li>
+            <li><a href="check_availability.html" class="footer-link">Check Availability</a></li>
+            <li><a href="success_stories.html" class="footer-link">Success Stories</a></li>
+            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="#" class="footer-link">Privacy Policy</a></li>
+            <li><a href="#" class="footer-link">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info Column -->
+        <div class="footer-column">
+          <h4 class="footer-title">Contact Info</h4>
+          <ul class="footer-contact">
+            <li class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span>Emergency: 1800-BLOOD-HELP</span>
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>support@raktdhara.in</span>
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>DKTE, ICHALKARANJI</span>
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-clock"></i>
+              <span>24/7 Emergency Service</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Column -->
+        <div class="footer-column">
+          <h4 class="footer-title">Newsletter</h4>
+          <p class="newsletter-description">
+            Stay updated with our latest blood donation drives and events.
+          </p>
+          <form class="newsletter-form">
+            <div class="newsletter-input-group">
+              <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-divider"></div>
+        <div class="footer-copyright">
+          <span>© 2025 RAKT DHARA. All rights reserved.</span>
+          <div class="footer-legal">
+            <a href="#" class="legal-link">Privacy Policy</a>
+            <a href="#" class="legal-link">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

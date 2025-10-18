@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - RAKT DHARA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #e60023, #c41e3a);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border: 4px solid #e60023;
+        }
+
+        .profile-info h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .blood-type-badge {
+            background: #e60023;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .detail-item i {
+            color: #e60023;
+            width: 16px;
+        }
+
+        .profile-right {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .availability {
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .verification {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card.green {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        }
+
+        .stat-card.orange {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        }
+
+        .stat-card.blue {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+        }
+
+        .stat-card.purple {
+            background: linear-gradient(135deg, #e2e3f0, #d1d3e2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Remaining Days Card */
+        .remaining-days-card {
+            background: linear-gradient(135deg, #e60023, #c41e3a);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(230, 0, 35, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .remaining-days-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .remaining-days-icon {
+            font-size: 2.5rem;
+            color: white;
+            opacity: 0.9;
+        }
+
+        .remaining-days-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .remaining-days-count {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .remaining-days-text {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .remaining-days-status {
+            text-align: right;
+        }
+
+        .status-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-badge.available {
+            background: #28a745;
+        }
+
+        .status-badge.waiting {
+            background: #ffc107;
+            color: #333;
+        }
+
+        /* Tabs */
+        .tabs {
+            background: white;
+            border-radius: 15px;
+            padding: 0;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .tab-nav {
+            display: flex;
+            background: #f8f9fa;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .tab-button.active {
+            background: #e60023;
+            color: white;
+        }
+
+        .tab-content {
+            padding: 30px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Donation History */
+        .donation-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #28a745;
+            position: relative;
+        }
+
+        .donation-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            background: #28a745;
+            border-radius: 50%;
+        }
+
+        .donation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .donation-title {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .donation-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .donation-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .detail-row i {
+            color: #e60023;
+            width: 16px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-contact {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-schedule {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-favorite {
+            background: #007bff;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Medical Information */
+        .medical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .medical-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #e60023;
+        }
+
+        .medical-card h4 {
+            color: #e60023;
+            margin-bottom: 10px;
+        }
+
+        /* Awards */
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .award-card {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #ffc107;
+        }
+
+        .award-icon {
+            font-size: 2rem;
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-right {
+                margin-left: 0;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #e60023;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1 id="userName">Loading...</h1>
+        <button class="close-btn" onclick="logout()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-left">
+                <div class="profile-image" id="profileImage">
+                    No Image
+                </div>
+                <div class="profile-info">
+                    <h2 id="profileName">Loading...</h2>
+                    <div class="blood-type-badge" id="bloodTypeBadge">Loading...</div>
+                    <div class="profile-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="userLocation">Loading...</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-user"></i>
+                            <span id="userAge">Loading...</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-weight"></i>
+                            <span id="userWeight">Loading...</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-ruler-vertical"></i>
+                            <span id="userHeight">Loading...</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-venus-mars"></i>
+                            <span id="userGender">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-right">
+                <div class="availability" id="availabilityStatus">Loading...</div>
+                <div class="verification">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Verified Donor</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card green">
+                <div class="stat-number" id="totalDonations">0</div>
+                <div class="stat-label">Total Donations</div>
+            </div>
+            <div class="stat-card orange">
+                <div class="stat-number" id="ratingScore">0.0</div>
+                <div class="stat-label">Rating Score</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-number" id="livesHelped">0</div>
+                <div class="stat-label">Lives Helped</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-number" id="yearsActive">0</div>
+                <div class="stat-label">Years Active</div>
+            </div>
+        </div>
+
+        <!-- Remaining Days Card -->
+        <div class="remaining-days-card" id="remainingDaysCard" style="display: none;">
+            <div class="remaining-days-content">
+                <div class="remaining-days-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="remaining-days-info">
+                    <h3 id="remainingDaysTitle">Next Donation Available</h3>
+                    <div class="remaining-days-count" id="remainingDaysCount">0</div>
+                    <div class="remaining-days-text" id="remainingDaysText">days remaining</div>
+                </div>
+                <div class="remaining-days-status" id="remainingDaysStatus">
+                    <span class="status-badge" id="statusBadge">Available</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab-nav">
+                <button class="tab-button active" onclick="switchTab('history')">Donation History</button>
+                <button class="tab-button" onclick="switchTab('medical')">Medical Information</button>
+                <button class="tab-button" onclick="switchTab('awards')">Awards & Recognition</button>
+                <button class="tab-button" onclick="switchTab('availability')">Availability</button>
+            </div>
+
+            <!-- Donation History Tab -->
+            <div id="historyTab" class="tab-content active">
+                <h3><i class="fas fa-history"></i> Donation History</h3>
+                <div id="donationHistory">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading donation history...
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn btn-contact">
+                        <i class="fas fa-phone"></i>
+                        Contact Donor
+                    </button>
+                    <button class="action-btn btn-schedule">
+                        <i class="fas fa-calendar"></i>
+                        Schedule Appointment
+                    </button>
+                    <button class="action-btn btn-favorite">
+                        <i class="fas fa-star"></i>
+                        Add to Favorites
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medical Information Tab -->
+            <div id="medicalTab" class="tab-content">
+                <h3><i class="fas fa-heartbeat"></i> Medical Information</h3>
+                <div class="medical-grid" id="medicalInfo">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading medical information...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Awards Tab -->
+            <div id="awardsTab" class="tab-content">
+                <h3><i class="fas fa-trophy"></i> Awards & Recognition</h3>
+                <div class="awards-grid" id="awardsInfo">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading awards...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Availability Tab -->
+            <div id="availabilityTab" class="tab-content">
+                <h3><i class="fas fa-calendar-check"></i> Availability</h3>
+                <div id="availabilityInfo">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading availability...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin + '/api';
+        let currentUser = null;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserProfile();
+        });
+
+        // Load user profile data
+        async function loadUserProfile() {
+            try {
+                // Get user ID from URL parameters or localStorage
+                const urlParams = new URLSearchParams(window.location.search);
+                const userId = urlParams.get('id') || localStorage.getItem('userId');
+                
+                if (!userId) {
+                    alert('User ID not found. Please login first.');
+                    window.location.href = '/';
+                    return;
+                }
+
+                // Load user data
+                const response = await fetch(`${API_BASE}/users/${userId}`);
+                const userData = await response.json();
+                
+                if (userData.success) {
+                    currentUser = userData.user;
+                    displayUserProfile(userData.user);
+                    loadDonationHistory(userId);
+                    loadMedicalInfo(userId);
+                    loadAwards(userId);
+                    loadAvailability(userId);
+                } else {
+                    alert('Failed to load user profile: ' + userData.message);
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                alert('Error loading user profile. Please try again.');
+            }
+        }
+
+        // Display user profile
+        function displayUserProfile(user) {
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('profileName').textContent = user.name;
+            document.getElementById('bloodTypeBadge').textContent = user.blood_type;
+            document.getElementById('userLocation').textContent = user.city;
+            document.getElementById('userAge').textContent = `${user.age || 25} years old`;
+            document.getElementById('userWeight').textContent = `${user.weight || 65} kg`;
+            document.getElementById('userHeight').textContent = `${user.height || "5'6"} ft`;
+            document.getElementById('userGender').textContent = user.gender || 'Male';
+            document.getElementById('availabilityStatus').textContent = user.is_available ? 'Available Now' : 'Not Available';
+            document.getElementById('availabilityStatus').style.background = user.is_available ? '#28a745' : '#dc3545';
+            
+            // Update stats
+            document.getElementById('totalDonations').textContent = user.donation_count || 0;
+            document.getElementById('ratingScore').textContent = user.rating || '4.9';
+            document.getElementById('livesHelped').textContent = user.lives_helped || Math.floor((user.donation_count || 0) * 2.8);
+            document.getElementById('yearsActive').textContent = user.years_active || '3+';
+            
+            // Display remaining days information
+            displayRemainingDays(user);
+        }
+
+        // Display remaining days for next donation
+        function displayRemainingDays(user) {
+            const remainingDaysCard = document.getElementById('remainingDaysCard');
+            const remainingDaysCount = document.getElementById('remainingDaysCount');
+            const remainingDaysText = document.getElementById('remainingDaysText');
+            const remainingDaysTitle = document.getElementById('remainingDaysTitle');
+            const statusBadge = document.getElementById('statusBadge');
+            
+            if (user.remaining_days !== undefined) {
+                remainingDaysCard.style.display = 'block';
+                
+                if (user.can_donate) {
+                    remainingDaysCount.textContent = '0';
+                    remainingDaysText.textContent = 'Ready to donate!';
+                    remainingDaysTitle.textContent = 'Next Donation Available';
+                    statusBadge.textContent = 'Available';
+                    statusBadge.className = 'status-badge available';
+                } else {
+                    remainingDaysCount.textContent = user.remaining_days;
+                    remainingDaysText.textContent = user.remaining_days === 1 ? 'day remaining' : 'days remaining';
+                    remainingDaysTitle.textContent = 'Next Donation Available';
+                    statusBadge.textContent = 'Waiting';
+                    statusBadge.className = 'status-badge waiting';
+                }
+            } else {
+                remainingDaysCard.style.display = 'none';
+            }
+        }
+
+        // Load donation history
+        async function loadDonationHistory(userId) {
+            try {
+                const response = await fetch(`${API_BASE}/users/${userId}/donations`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayDonationHistory(data.donations);
+                } else {
+                    document.getElementById('donationHistory').innerHTML = '<p>No donation history found.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading donation history:', error);
+                document.getElementById('donationHistory').innerHTML = '<p>Error loading donation history.</p>';
+            }
+        }
+
+        // Display donation history
+        function displayDonationHistory(donations) {
+            const container = document.getElementById('donationHistory');
+            
+            if (donations.length === 0) {
+                container.innerHTML = '<p>No donation history found.</p>';
+                return;
+            }
+
+            const historyHTML = donations.map((donation, index) => `
+                <div class="donation-item">
+                    <div class="donation-header">
+                        <div class="donation-title">Donation #${donation.id}</div>
+                        <div class="donation-status">
+                            <i class="fas fa-check-circle"></i>
+                            Successful
+                        </div>
+                    </div>
+                    <div class="donation-details">
+                        <div class="detail-row">
+                            <i class="fas fa-calendar"></i>
+                            ${new Date(donation.donation_date).toLocaleDateString()}
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-hospital"></i>
+                            ${donation.hospital || 'City Hospital, ' + currentUser.city}
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-tint"></i>
+                            Volume: ${donation.volume || '450ml'} • Used for: ${donation.purpose || 'Emergency Surgery'} • Patient: ${donation.patient || 'Critical Care'}
+                        </div>
+
+                        </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = historyHTML;
+        }
+
+        // Load medical information
+        async function loadMedicalInfo(userId) {
+            try {
+                const response = await fetch(`${API_BASE}/users/${userId}/medical`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayMedicalInfo(data.medical);
+                } else {
+                    document.getElementById('medicalInfo').innerHTML = '<p>No medical information available.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading medical info:', error);
+                document.getElementById('medicalInfo').innerHTML = '<p>Error loading medical information.</p>';
+            }
+        }
+
+        // Display medical information
+        function displayMedicalInfo(medical) {
+            const container = document.getElementById('medicalInfo');
+            
+            const medicalHTML = `
+                <div class="medical-card">
+                    <h4><i class="fas fa-heartbeat"></i> Health Status</h4>
+                    <p><strong>Blood Pressure:</strong> ${medical.blood_pressure || 'Normal'}</p>
+                    <p><strong>Heart Rate:</strong> ${medical.heart_rate || '72 BPM'}</p>
+                    <p><strong>Last Checkup:</strong> ${medical.last_checkup || '3 months ago'}</p>
+                </div>
+                <div class="medical-card">
+                    <h4><i class="fas fa-shield-alt"></i> Vaccination Status</h4>
+                    <p><strong>COVID-19:</strong> ${medical.covid_vaccinated ? 'Vaccinated' : 'Not Vaccinated'}</p>
+                    <p><strong>Hepatitis B:</strong> ${medical.hepatitis_b ? 'Vaccinated' : 'Not Vaccinated'}</p>
+                    <p><strong>Last Vaccination:</strong> ${medical.last_vaccination || '6 months ago'}</p>
+                </div>
+                <div class="medical-card">
+                    <h4><i class="fas fa-notes-medical"></i> Medical History</h4>
+                    <p><strong>Allergies:</strong> ${medical.allergies || 'None reported'}</p>
+                    <p><strong>Medications:</strong> ${medical.medications || 'None'}</p>
+                    <p><strong>Chronic Conditions:</strong> ${medical.chronic_conditions || 'None'}</p>
+                </div>
+            `;
+
+            container.innerHTML = medicalHTML;
+        }
+
+        // Load awards
+        async function loadAwards(userId) {
+            try {
+                const response = await fetch(`${API_BASE}/users/${userId}/awards`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayAwards(data.awards);
+                } else {
+                    document.getElementById('awardsInfo').innerHTML = '<p>No awards found.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading awards:', error);
+                document.getElementById('awardsInfo').innerHTML = '<p>Error loading awards.</p>';
+            }
+        }
+
+        // Display awards
+        function displayAwards(awards) {
+            const container = document.getElementById('awardsInfo');
+            
+            if (awards.length === 0) {
+                container.innerHTML = '<p>No awards found.</p>';
+                return;
+            }
+
+            const awardsHTML = awards.map(award => `
+                <div class="award-card">
+                    <div class="award-icon">${award.icon}</div>
+                    <h4>${award.title}</h4>
+                    <p>${award.description}</p>
+                    <small>${award.date}</small>
+                </div>
+            `).join('');
+
+            container.innerHTML = awardsHTML;
+        }
+
+        // Load availability
+        async function loadAvailability(userId) {
+            try {
+                const response = await fetch(`${API_BASE}/users/${userId}/availability`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayAvailability(data.availability);
+                } else {
+                    document.getElementById('availabilityInfo').innerHTML = '<p>No availability information.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading availability:', error);
+                document.getElementById('availabilityInfo').innerHTML = '<p>Error loading availability.</p>';
+            }
+        }
+
+        // Display availability
+        function displayAvailability(availability) {
+            const container = document.getElementById('availabilityInfo');
+            
+            const availabilityHTML = `
+                <div class="medical-card">
+                    <h4><i class="fas fa-calendar"></i> Current Status</h4>
+                    <p><strong>Status:</strong> ${availability.status || 'Available'}</p>
+                    <p><strong>Next Available:</strong> ${availability.next_available || 'Immediately'}</p>
+                    <p><strong>Can Donate:</strong> ${availability.can_donate ? 'Yes' : 'No'}</p>
+                    ${availability.days_remaining !== undefined ? `<p><strong>Days Remaining:</strong> ${availability.days_remaining} days</p>` : ''}
+                    <p><strong>Preferred Time:</strong> ${availability.preferred_time || '9 AM - 5 PM'}</p>
+                </div>
+                <div class="medical-card">
+                    <h4><i class="fas fa-clock"></i> Schedule</h4>
+                    <p><strong>Monday:</strong> ${availability.monday || '9 AM - 5 PM'}</p>
+                    <p><strong>Tuesday:</strong> ${availability.tuesday || '9 AM - 5 PM'}</p>
+                    <p><strong>Wednesday:</strong> ${availability.wednesday || '9 AM - 5 PM'}</p>
+                    <p><strong>Thursday:</strong> ${availability.thursday || '9 AM - 5 PM'}</p>
+                    <p><strong>Friday:</strong> ${availability.friday || '9 AM - 5 PM'}</p>
+                </div>
+                ${availability.last_donation_date ? `
+                <div class="medical-card">
+                    <h4><i class="fas fa-history"></i> Donation History</h4>
+                    <p><strong>Last Donation:</strong> ${new Date(availability.last_donation_date).toLocaleDateString()}</p>
+                    <p><strong>Total Donations:</strong> ${availability.donation_count || 0}</p>
+                </div>
+                ` : ''}
+            `;
+
+            container.innerHTML = availabilityHTML;
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('userId');
+            localStorage.removeItem('userToken');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+flowchart LR
+  %% Simple MVP architecture tailored to your project
+
+  user([User])
+
+  subgraph FE[Frontend]
+    direction TB
+    landing[Landing Page]
+    donorUI[Donor Dashboard]
+    requesterUI[Requester Dashboard]
+    adminUI[Admin Dashboard]
+    ngoUI[NGO Dashboard]
+    certUI[Certificate Generator UI]
+  end
+
+  subgraph API[Flask API]
+    direction TB
+    auth[Auth\nPOST /api/user/login\nPOST /api/admin/login\nPOST /api/requesters/login]
+    donors[Donors\nGET/POST /api/donors]
+    requesters[Requesters\nGET/POST /api/requesters]
+    requests[Blood Requests\nGET/POST /api/requests\nPUT /api/requests/:id]
+    requestsSimple[Simple Requests\nGET/POST /api/blood_requests]
+    stats[Stats\nGET /api/dashboard/stats]
+    ngoReq[NGO Requests\n(uses NGORequest model)]
+    cert[Certificates\n/certificate-generator\nuses donor.certificate_id]
+  end
+
+  subgraph DB[SQLite Database]
+    donorTbl[(Donor)]
+    requesterTbl[(Requester)]
+    reqTbl[(BloodRequest)]
+    reqSimpleTbl[(BloodRequestSimple)]
+    adminTbl[(Admin)]
+    ngoTbl[(NGORequest)]
+  end
+
+  subgraph DEPLOY[Deployment]
+    frontVercel[Frontend on Vercel]
+    backVercel[Backend on Vercel]
+  end
+
+  %% Flows
+  user --> landing
+  landing --> auth
+  donorUI --> donors
+  requesterUI --> requests
+  requesterUI --> requestsSimple
+  adminUI --> stats
+  adminUI --> donors
+  adminUI --> requesters
+  adminUI --> requests
+  adminUI --> requestsSimple
+  ngoUI --> ngoReq
+  certUI --> cert
+
+  FE --> API
+  API --> DB
+
+  %% Data links
+  donors --> donorTbl
+  requesters --> requesterTbl
+  requests --> reqTbl
+  requestsSimple --> reqSimpleTbl
+  ngoReq --> ngoTbl
+  cert --> donorTbl
+  auth --> adminTbl
+
+  %% Deployment notes (dashed arrows)
+  FE -. deployed on .-> frontVercel
+  API -. deployed on .-> backVercel
+
+  %% Minimal styling
+  classDef fe fill:#0d1f17,stroke:#48c78e,stroke-width:2,color:#e5fff3;
+  classDef api fill:#0f1a17,stroke:#89f2c7,stroke-width:2,color:#e5fff3;
+  classDef db fill:#1a1414,stroke:#c97b6b,stroke-width:2,color:#ffeceb;
+  classDef dep fill:#0e1624,stroke:#6aa0ff,stroke-width:2,color:#e8f1ff;
+
+  class FE,landing,donorUI,requesterUI,adminUI,ngoUI,certUI fe;
+  class API,auth,donors,requesters,requests,requestsSimple,stats,ngoReq,cert api;
+  class DB,donorTbl,requesterTbl,reqTbl,reqSimpleTbl,adminTbl,ngoTbl db;
+  class DEPLOY,frontVercel,backVercel dep;
+
+  linkStyle default stroke:#a0a0a0,stroke-width:1.5;
+

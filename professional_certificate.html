@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Blood Donation Certificate Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e60023, #c41e3a);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e60023, #ff6b6b);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .form-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e60023, #ff6b6b);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #333;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: #fff;
+            color: #333;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #e60023;
+            box-shadow: 0 0 0 3px rgba(230, 0, 35, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            margin: 5px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e60023, #ff6b6b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #c41e3a, #ff5252);
+            box-shadow: 0 6px 20px rgba(230, 0, 35, 0.4);
+            transform: translateY(-2px);
+        }
+
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #4caf50);
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #218838, #45a049);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            transform: translateY(-2px);
+        }
+
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #f44336);
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c82333, #e53935);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+            transform: translateY(-2px);
+        }
+
+
+        /* Professional Certificate Styles */
+        .certificate-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 50px;
+            margin: 30px 0;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 3px solid #e60023;
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            aspect-ratio: 3/4;
+        }
+
+        .certificate-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e60023, #ff6b6b);
+        }
+
+        .certificate {
+            background: white;
+            padding: 60px;
+            border-radius: 15px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid #e60023;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid rgba(230, 0, 35, 0.3);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .certificate::after {
+            content: '🏆';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .red-ribbon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(135deg, #e60023 0%, #c41e3a 100%);
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+            z-index: 1;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Certificate Header */
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .certificate-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .certificate-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            font-weight: 600;
+        }
+
+        .certificate-text {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blood-donation-badge {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 15px auto;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Certificate Main Content - Removed for portrait layout */
+
+        .donor-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .donor-section {
+            text-align: left;
+        }
+
+        .signature-line {
+            border-bottom: 2px solid #2c3e50;
+            margin-bottom: 10px;
+            height: 2px;
+        }
+
+        .donor-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .donation-count {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        /* Improved styling for better certificate appearance */
+        .certificate {
+            background: white;
+            padding: 60px;
+            border-radius: 10px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #e74c3c;
+        }
+
+        .certificate-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .certificate-subtitle {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            font-weight: 600;
+        }
+
+        .blood-drop {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 100px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+            z-index: 2;
+        }
+
+        .blood-drop::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 20px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+
+        /* Donor Details Section - Removed to match reference design */
+
+        /* Certificate Footer */
+        .certificate-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(230, 0, 35, 0.05) 0%, rgba(255, 255, 255, 0.8) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(230, 0, 35, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .certificate-info {
+            flex: 1;
+        }
+
+        .certificate-id {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .generation-info {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .generation-info div {
+            margin-bottom: 2px;
+        }
+
+        .qr-code-section {
+            flex-shrink: 0;
+            margin-left: 20px;
+        }
+
+        .qr-code-placeholder {
+            background: white;
+            border: 2px solid #e60023;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            min-width: 120px;
+        }
+
+        .qr-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .qr-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #e60023;
+            margin-bottom: 5px;
+        }
+
+        .qr-id {
+            font-size: 0.7rem;
+            color: #666;
+            word-break: break-all;
+        }
+
+        .certificate-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .certificate-actions .btn {
+            margin: 0 10px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .error {
+            background: #fadbd8;
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .success {
+            background: #d5f4e6;
+            color: #27ae60;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .certificate-list {
+            margin-top: 30px;
+        }
+
+        .certificate-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #27ae60;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .certificate-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .certificate-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .certificate-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .donor-info {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .certificate-title {
+                font-size: 2rem;
+            }
+            
+            .certificate {
+                padding: 30px;
+            }
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0.5in;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .header, .form-section, .certificate-actions {
+                display: none;
+            }
+            
+            .certificate-container {
+                box-shadow: none;
+                background: white;
+                aspect-ratio: unset;
+                height: 100vh;
+                padding: 20px;
+            }
+            
+            .certificate {
+                box-shadow: none;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 Professional Blood Donation Certificate Generator</h1>
+            <p>Generate certificates in the exact professional format</p>
+        </div>
+
+        <div class="content">
+            <!-- Certificate ID Input -->
+            <div class="form-section">
+                <h3>📋 Generate Certificate</h3>
+                <div class="form-group">
+                    <label for="certificateId">Certificate ID:</label>
+                    <input type="text" id="certificateId" name="certificateId" placeholder="Enter Certificate ID (e.g., CERT-1-20251011154530)">
+                </div>
+                <button class="btn btn-success" onclick="generateCertificate()">🎖️ Generate Professional Certificate</button>
+                <button class="btn btn-primary" onclick="loadCompletedDonations()">📋 View All Certificates</button>
+            </div>
+
+            <!-- Certificate Display -->
+            <div id="certificateDisplay" style="display: none;">
+                <div class="certificate-container">
+                    <div class="red-ribbon"></div>
+                    <div class="certificate">
+                        <!-- Header Section -->
+                        <div class="certificate-header">
+                            <div class="certificate-title">PROFESSIONAL<br>BLOOD-DONATION</div>
+                            <div class="certificate-subtitle">E-CERTIFICATE</div>
+                            <div class="certificate-text">
+                                This certificate has been granted to honor blood donation and
+                            </div>
+                            <div class="blood-donation-badge">BLOOD DONATION</div>
+                            <div class="certificate-text">
+                                This certificate has been granted to honor blood donation and blood donation to assist medical healthcare.
+                            </div>
+                        </div>
+
+                        <!-- Central Blood Drop -->
+                        <div class="blood-drop"></div>
+
+                        <!-- Signature Section -->
+                        <div class="donor-info">
+                            <div class="donor-section">
+                                <div class="signature-line"></div>
+                                <div class="donor-name" id="donorNameLeft">Loading...</div>
+                                <div class="donation-count" id="donationCountLeft">Loading...</div>
+                            </div>
+                            <div class="donor-section">
+                                <div class="signature-line"></div>
+                                <div class="donor-name" id="donorNameRight">Medical Officer</div>
+                                <div class="donation-count" id="donationCountRight">Verified by Medical Staff</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Certificate Footer -->
+                        <div class="certificate-footer">
+                            <div class="certificate-info">
+                                <div class="certificate-id">
+                                    <strong>Certificate ID:</strong> <span id="certificateIdDisplay"></span>
+                                </div>
+                                <div class="generation-info">
+                                    Generated: <span id="generationDate"></span>
+                                </div>
+                            </div>
+                            <div class="qr-code-section">
+                                <div class="qr-code-placeholder">
+                                    <div class="qr-icon">📱</div>
+                                    <div class="qr-text">Verify</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certificate-actions">
+                    <button class="btn btn-primary" onclick="printCertificate()">🖨️ Print Certificate</button>
+                    <button class="btn btn-danger" onclick="hideCertificate()">❌ Close Certificate</button>
+                </div>
+            </div>
+
+            <!-- Certificate List -->
+            <div class="certificate-list" id="certificateList" style="display: none;">
+                <h3>📜 Available Certificates</h3>
+                <div id="certificateListContainer">
+                    <div class="loading">Loading certificates...</div>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div id="messages"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin + '/api';
+
+        // Show messages
+        function showMessage(message, type = 'success') {
+            const messagesDiv = document.getElementById('messages');
+            const messageEl = document.createElement('div');
+            messageEl.className = type;
+            messageEl.textContent = message;
+            messagesDiv.appendChild(messageEl);
+            
+            setTimeout(() => {
+                if (messageEl.parentNode) {
+                    messageEl.parentNode.removeChild(messageEl);
+                }
+            }, 5000);
+        }
+
+        // Generate certificate
+        async function generateCertificate() {
+            const certificateId = document.getElementById('certificateId').value.trim();
+            
+            if (!certificateId) {
+                showMessage('Please enter a Certificate ID', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/certificate/generate/${certificateId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    // The API returns the certificate data directly, not wrapped in a 'certificate' object
+                    displayProfessionalCertificate(data);
+                    showMessage('Certificate generated successfully!', 'success');
+                } else {
+                    showMessage(`Error: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Network error: ${error.message}`, 'error');
+            }
+        }
+
+        // Display professional certificate
+        function displayProfessionalCertificate(certificate) {
+            // Update donor information (left side only)
+            document.getElementById('donorNameLeft').textContent = certificate.donor_name || 'N/A';
+            document.getElementById('donationCountLeft').textContent = certificate.donation_count_text || '1 Unit';
+            
+            // Donor details section removed to match reference design
+            
+            // Display certificate ID and generation info
+            document.getElementById('certificateIdDisplay').textContent = certificate.certificate_id || 'N/A';
+            document.getElementById('generationDate').textContent = certificate.certificate_generated_date || new Date().toLocaleDateString();
+            
+            // Right side shows medical officer (already set in HTML)
+            // No need to update right side as it's already set to "Medical Officer"
+            
+            // Show certificate
+            document.getElementById('certificateDisplay').style.display = 'block';
+            
+            // Scroll to certificate
+            document.getElementById('certificateDisplay').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Load completed donations
+        async function loadCompletedDonations() {
+            try {
+                const response = await fetch(`${API_BASE}/donations/completed`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayCertificateList(data.completed_donations);
+                    document.getElementById('certificateList').style.display = 'block';
+                } else {
+                    showMessage(`Error: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Network error: ${error.message}`, 'error');
+            }
+        }
+
+        // Display certificate list
+        function displayCertificateList(donations) {
+            const container = document.getElementById('certificateListContainer');
+            
+            if (donations.length === 0) {
+                container.innerHTML = '<div class="loading">No completed donations found</div>';
+                return;
+            }
+            
+            container.innerHTML = donations.map(donation => `
+                <div class="certificate-item" onclick="loadCertificate('${donation.certificate_id || 'N/A'}')">
+                    <h4>Certificate: ${donation.certificate_id || 'N/A'}</h4>
+                    <div class="certificate-details">
+                        <div><strong>Donor:</strong> ${donation.donor_name || 'N/A'}</div>
+                        <div><strong>Date:</strong> ${donation.donation_date ? new Date(donation.donation_date).toLocaleDateString() : 'N/A'}</div>
+                        <div><strong>Blood Type:</strong> ${donation.blood_type || 'N/A'}</div>
+                        <div><strong>Location:</strong> ${donation.donation_location || 'N/A'}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load certificate by ID
+        function loadCertificate(certificateId) {
+            document.getElementById('certificateId').value = certificateId;
+            generateCertificate();
+        }
+
+        // Print certificate
+        function printCertificate() {
+            window.print();
+        }
+
+        // Hide certificate
+        function hideCertificate() {
+            document.getElementById('certificateDisplay').style.display = 'none';
+        }
+
+        // Load completed donations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for certificate ID in URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const certificateId = urlParams.get('certificate');
+            
+            if (certificateId) {
+                document.getElementById('certificateId').value = certificateId;
+                generateCertificate();
+            } else {
+                loadCompletedDonations();
+            }
+        });
+    </script>
+</body>
+</html>

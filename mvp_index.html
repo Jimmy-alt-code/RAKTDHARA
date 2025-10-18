@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank MVP - RAKT DHARA</title>
+    <!-- Cache bust: Login section removed -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            
+            
+            background: url('background.jpg') ;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+         
+        }
+        
+        @keyframes backgroundShift {
+            0%, 100% { background-position: center center; }
+            50% { background-position: center 60%; }
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
+            animation: containerFloat 6s ease-in-out infinite;
+        }
+        
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #e60023;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-weight: 800;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #e60023;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: #e60023;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #c41e3a;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            margin-top: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .admin-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .admin-link a {
+            color: #e60023;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .admin-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Role Selection Styles */
+        .role-btn {
+            padding: 15px 30px;
+            border: 2px solid #e60023;
+            background: white;
+            color: #e60023;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .role-btn.active {
+            background: #e60023;
+            color: white;
+        }
+        
+        .role-btn:hover {
+            background: #e60023;
+            color: white;
+        }
+        
+        .registration-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #8f8f8f;
+            color: #fff;
+            padding: 40px 0 20px 0;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            color: #e60023;
+        }
+
+        .footer-logo h3 {
+            color: #e60023;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .footer-description {
+            color: #1976d2;
+            line-height: 1.6;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #e60023;
+            color: #fff;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #b3001c;
+            transform: translateY(-2px);
+        }
+
+        .footer-title {
+            color: #e60023;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-link {
+            color: #1976d2;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-link:hover {
+            color: #fff;
+        }
+
+        .footer-link::before {
+            content: "■";
+            font-size: 0.6rem;
+            color: #e60023;
+        }
+
+        .footer-contact {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1976d2;
+            font-size: 0.95rem;
+        }
+
+        .contact-item i {
+            color: #e60023;
+            width: 16px;
+            text-align: center;
+        }
+
+        .newsletter-description {
+            color: #1976d2;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form {
+            margin-top: 10px;
+        }
+
+        .newsletter-input-group {
+            display: flex;
+            gap: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: #fff;
+            color: #333;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .newsletter-input::placeholder {
+            color: #999;
+        }
+
+        .newsletter-btn {
+            background: #e60023;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .newsletter-btn:hover {
+            background: #b3001c;
+        }
+
+        .footer-bottom {
+            margin-top: 30px;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: #999;
+            margin-bottom: 20px;
+        }
+
+        .footer-copyright {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 20px;
+        }
+
+        .legal-link {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .legal-link:hover {
+            color: #fff;
+        }
+
+        /* Footer Responsive Design */
+        @media (max-width: 768px) {
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-copyright {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .footer-legal {
+                justify-content: center;
+            }
+            
+            .newsletter-input-group {
+                flex-direction: column;
+            }
+            
+            .newsletter-btn {
+                border-radius: 0 0 8px 8px;
+            }
+            
+            .newsletter-input {
+                border-radius: 8px 8px 0 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                padding: 30px 0 15px 0;
+            }
+            
+            .footer-container {
+                padding: 0 15px;
+            }
+            
+            .footer-main {
+                gap: 25px;
+            }
+            
+            .footer-title {
+                font-size: 1rem;
+            }
+            
+            .footer-description,
+            .newsletter-description {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩸 RAKT DHARA</h1>
+            <p>Blood Bank Management System - MVP</p>
+        </div>
+        
+        <div id="alert" class="alert"></div>
+        
+        <!-- User Type Selection -->
+        <div class="user-type-selection" style="margin-bottom: 30px;">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #333;">Choose Your Role</h3>
+            <div style="display: flex; gap: 20px; justify-content: center;">
+                <button id="donorTab" class="role-btn active" onclick="showRegistrationForm('donor')">🩸 Blood Donor</button>
+                <button id="requesterTab" class="role-btn" onclick="showRegistrationForm('requester')">🏥 Blood Requester</button>
+            </div>
+        </div>
+        
+        <!-- Donor Registration -->
+        <div id="donorRegistration" class="registration-section">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #333;">Register as Blood Donor</h3>
+            <form id="donorForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="blood_type">Blood Type</label>
+                <select id="blood_type" name="blood_type" required>
+                    <option value="">Select Blood Type</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Default: donor123" required>
+            </div>
+            
+            <button type="submit" class="btn">Register as Donor</button>
+            </form>
+        </div>
+        
+        <!-- Requester Registration -->
+        <div id="requesterRegistration" class="registration-section" style="display: none;">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #333;">Register as Blood Requester</h3>
+            <form id="requesterForm">
+                <div class="form-group">
+                    <label for="req_name">Full Name</label>
+                    <input type="text" id="req_name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="req_email">Email</label>
+                    <input type="email" id="req_email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="req_phone">Phone Number</label>
+                    <input type="tel" id="req_phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="req_city">City</label>
+                    <input type="text" id="req_city" name="city" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="req_password">Password</label>
+                    <input type="password" id="req_password" name="password" placeholder="Create a password" required>
+                </div>
+                
+                <button type="submit" class="btn">Register as Requester</button>
+            </form>
+        </div>
+        
+        <form id="requestForm" style="margin-top: 30px;">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #333;">Blood Request</h3>
+            
+            <div class="form-group">
+                <label for="patient_name">Patient Name</label>
+                <input type="text" id="patient_name" name="patient_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="request_blood_type">Blood Type Required</label>
+                <select id="request_blood_type" name="blood_type" required>
+                    <option value="">Select Blood Type</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="units_required">Units Required</label>
+                <input type="number" id="units_required" name="units_required" min="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact_phone">Contact Phone</label>
+                <input type="tel" id="contact_phone" name="contact_phone" required>
+            </div>
+            
+            <button type="submit" class="btn btn-secondary">Create Blood Request</button>
+        </form>
+        
+        <!-- New Simplified Blood Request Form -->
+        <form id="simpleBloodRequestForm" style="margin-top: 30px; background: #f8f9fa; padding: 20px; border-radius: 10px;">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #333;">Simple Blood Request</h3>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">Need blood? Submit a simple request below.</p>
+            
+            <div class="form-group">
+                <label for="simple_name">Your Name</label>
+                <input type="text" id="simple_name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="simple_email">Email</label>
+                <input type="email" id="simple_email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="simple_phone">Phone Number</label>
+                <input type="tel" id="simple_phone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="simple_blood_type">Blood Type Required</label>
+                <select id="simple_blood_type" name="blood_type" required>
+                    <option value="">Select Blood Type</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="simple_city">City</label>
+                <input type="text" id="simple_city" name="city" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="simple_message">Message (Optional)</label>
+                <textarea id="simple_message" name="message" rows="3" placeholder="Tell us more about your blood request..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit Blood Request</button>
+        </form>
+        
+        <!-- Certificate Generation Section -->
+        <div id="certificateSection" style="margin-top: 30px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 25px; border-radius: 15px; border: 2px solid #e60023;">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #e60023; font-weight: bold;">🏆 Certificate Generation</h3>
+            <p style="text-align: center; color: #666; margin-bottom: 25px; font-size: 14px;">Enter your Certificate ID to generate your blood donation certificate</p>
+            
+            <div style="max-width: 400px; margin: 0 auto;">
+                <div class="form-group">
+                    <label for="certificateId" style="font-weight: 600; color: #333;">Certificate ID</label>
+                    <input type="text" id="certificateId" placeholder="Enter your Certificate ID (e.g., BD-2024-001)" 
+                           style="width: 100%; padding: 12px 15px; border: 2px solid #e60023; border-radius: 8px; font-size: 16px; font-weight: 500; text-align: center; letter-spacing: 1px;">
+                </div>
+                
+                <button type="button" id="generateCertBtn" onclick="generateCertificate()" 
+                        style="width: 100%; padding: 12px 20px; background: linear-gradient(135deg, #e60023, #ff1744); border: none; border-radius: 8px; color: white; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s ease; margin-top: 15px;">
+                    🏆 Generate Certificate
+                </button>
+                
+                <div id="certificateResult" style="margin-top: 20px; text-align: center; display: none;">
+                    <!-- Certificate generation result will be displayed here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="admin-link" style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+            <a href="/admin" style="background: #e60023; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3); transition: all 0.3s ease; display: inline-block;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(230, 0, 35, 0.4)'" onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(230, 0, 35, 0.3)'">
+                🔐 Login to All Profiles
+            </a>
+        </div>
+        
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <!-- Main Footer Content -->
+        <div class="footer-main">
+          <!-- RAKT DHARA Column -->
+          <div class="footer-column">
+            <div class="footer-brand">
+              <div class="footer-logo">
+                <div class="logo-icon">🩸</div>
+                <h3>RAKT DHARA</h3>
+              </div>
+              <p class="footer-description">
+                India's first student-built blood bank platform connecting donors with patients in need. Making blood donation as simple as ordering food online.
+              </p>
+              <div class="social-links">
+                <a href="#" class="social-link" aria-label="Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Instagram">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Links Column -->
+          <div class="footer-column">
+            <h4 class="footer-title">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="#" class="footer-link">How It Works</a></li>
+              <li><a href="check_availability.html" class="footer-link">Check Availability</a></li>
+              <li><a href="success_stories.html" class="footer-link">Success Stories</a></li>
+              <li><a href="#" class="footer-link">FAQ</a></li>
+              <li><a href="#" class="footer-link">Privacy Policy</a></li>
+              <li><a href="#" class="footer-link">Terms of Service</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact Info Column -->
+          <div class="footer-column">
+            <h4 class="footer-title">Contact Info</h4>
+            <ul class="footer-contact">
+              <li class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>Emergency: 1800-BLOOD-HELP</span>
+              </li>
+              <li class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>support@raktdhara.in</span>
+              </li>
+              <li class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>DKTE, ICHALKARANJI</span>
+              </li>
+              <li class="contact-item">
+                <i class="fas fa-clock"></i>
+                <span>24/7 Emergency Service</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Newsletter Column -->
+          <div class="footer-column">
+            <h4 class="footer-title">Newsletter</h4>
+            <p class="newsletter-description">
+              Stay updated with our latest blood donation drives and events.
+            </p>
+            <form class="newsletter-form">
+              <div class="newsletter-input-group">
+                <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="footer-divider"></div>
+          <div class="footer-copyright">
+            <span>© 2025 RAKT DHARA. All rights reserved.</span>
+            <div class="footer-legal">
+              <a href="#" class="legal-link">Privacy Policy</a>
+              <a href="#" class="legal-link">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:5000/api';
+        let currentUser = null;
+        
+        // Role Selection Functions
+        function showRegistrationForm(role) {
+            // Update button states
+            document.getElementById('donorTab').classList.remove('active');
+            document.getElementById('requesterTab').classList.remove('active');
+            document.getElementById(role + 'Tab').classList.add('active');
+            
+            // Show/hide forms
+            document.getElementById('donorRegistration').style.display = role === 'donor' ? 'block' : 'none';
+            document.getElementById('requesterRegistration').style.display = role === 'requester' ? 'block' : 'none';
+        }
+        
+        function showAlert(message, type = 'success') {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert alert-${type}`;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+        
+        document.getElementById('donorForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get form elements directly
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const blood_type = document.getElementById('blood_type').value;
+            const city = document.getElementById('city').value.trim();
+            const password = document.getElementById('password').value.trim() || 'donor123';
+            
+            // Validate required fields
+            if (!name || !email || !phone || !blood_type || !city) {
+                showAlert('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showAlert('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Check if email might already exist (basic check)
+            const commonEmails = ['admin@bloodbank.com', 'test@example.com', 'user@test.com'];
+            if (commonEmails.includes(email.toLowerCase())) {
+                showAlert('This email might already be registered. Please try a different email address.', 'error');
+                return;
+            }
+            
+            // Validate phone number
+            if (phone.length < 10) {
+                showAlert('Please enter a valid phone number', 'error');
+                return;
+            }
+            
+            // Prepare data object
+            const data = {
+                name: name,
+                email: email,
+                phone: phone,
+                blood_type: blood_type,
+                city: city,
+                password: password
+            };
+            
+            console.log('Submitting data:', data);
+            
+            try {
+                const response = await fetch(`${API_BASE}/donors`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                // Check if response is ok
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.log('Error response:', errorText);
+                    throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+                }
+                
+                const result = await response.json();
+                console.log('Success response:', result);
+                
+                if (result.success) {
+                    showAlert('Donor registered successfully! Certificate ID: ' + result.certificate_id);
+                    e.target.reset();
+                } else {
+                    if (result.message === 'Email already exists') {
+                        showAlert('This email is already registered. Please use a different email address.', 'error');
+                        // Focus on email field for easy correction
+                        document.getElementById('email').focus();
+                        document.getElementById('email').select();
+                    } else {
+                        showAlert('Error: ' + result.message, 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert('Failed to register donor: ' + error.message, 'error');
+            }
+        });
+        
+        // Requester Registration
+        document.getElementById('requesterForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch(`${API_BASE}/requesters`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Check if response is ok
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                // Check if response is JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    throw new Error(`Expected JSON but got: ${text.substring(0, 100)}...`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Requester registered successfully!');
+                    e.target.reset();
+                } else {
+                    showAlert('Error: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('Failed to register requester: ' + error.message, 'error');
+            }
+        });
+        
+        // Simple Blood Request Form
+        document.getElementById('simpleBloodRequestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // Client-side validation
+            if (!data.name || !data.email || !data.phone || !data.blood_type || !data.city) {
+                showAlert('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                showAlert('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Phone validation
+            if (data.phone.length < 10) {
+                showAlert('Please enter a valid phone number (at least 10 digits)', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/blood_requests`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Check if response is ok
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+                }
+                
+                // Check if response is JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    throw new Error(`Expected JSON but got: ${text.substring(0, 100)}...`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Blood request submitted successfully! Request ID: ' + result.request_id, 'success');
+                    e.target.reset();
+                } else {
+                    showAlert('Error: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Blood request submission error:', error);
+                showAlert('Failed to submit blood request: ' + error.message, 'error');
+            }
+        });
+        
+        // Certificate Generation Function
+        async function generateCertificate() {
+            const certificateId = document.getElementById('certificateId').value.trim();
+            const resultDiv = document.getElementById('certificateResult');
+            const generateBtn = document.getElementById('generateCertBtn');
+            
+            if (!certificateId) {
+                showAlert('Please enter a Certificate ID', 'error');
+                return;
+            }
+            
+            // Show loading state
+            generateBtn.innerHTML = '🔄 Searching...';
+            generateBtn.disabled = true;
+            resultDiv.style.display = 'none';
+            
+            try {
+                // Step 1: Search for donor by certificate ID
+                const searchResponse = await fetch(`${API_BASE}/donors/search?q=${encodeURIComponent(certificateId)}`);
+                const searchResults = await searchResponse.json();
+                
+                if (!searchResults || searchResults.length === 0) {
+                    throw new Error('Certificate ID not found. Please check your Certificate ID and try again.');
+                }
+                
+                // Step 2: Find the donor with matching certificate ID
+                const donor = searchResults.find(d => d.certificate_id === certificateId);
+                if (!donor) {
+                    throw new Error('Certificate ID not found. Please check your Certificate ID and try again.');
+                }
+                
+                // Step 3: Generate certificate
+                generateBtn.innerHTML = '🏆 Generating Certificate...';
+                
+                // Open certificate page with donor data
+                const certificateUrl = `/professional-certificate?certificate=${certificateId}&name=${encodeURIComponent(donor.name)}&blood_type=${donor.blood_type}&date=${new Date().toISOString().split('T')[0]}`;
+                window.open(certificateUrl, '_blank');
+                
+                // Show success message
+                resultDiv.innerHTML = `
+                    <div style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 8px;">
+                        <h4 style="margin: 0 0 10px 0; color: #155724;">✅ Certificate Generated Successfully!</h4>
+                        <p style="margin: 0; font-size: 14px;">
+                            <strong>Donor:</strong> ${donor.name}<br>
+                            <strong>Certificate ID:</strong> ${donor.certificate_id}<br>
+                            <strong>Blood Type:</strong> ${donor.blood_type}
+                        </p>
+                    </div>
+                `;
+                resultDiv.style.display = 'block';
+                
+                // Clear the input
+                document.getElementById('certificateId').value = '';
+                
+            } catch (error) {
+                console.error('Certificate generation error:', error);
+                resultDiv.innerHTML = `
+                    <div style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px; border-radius: 8px;">
+                        <h4 style="margin: 0 0 10px 0; color: #721c24;">❌ Error</h4>
+                        <p style="margin: 0; font-size: 14px;">${error.message}</p>
+                    </div>
+                `;
+                resultDiv.style.display = 'block';
+            } finally {
+                // Reset button state
+                generateBtn.innerHTML = '🏆 Generate Certificate';
+                generateBtn.disabled = false;
+            }
+        }
+        
+        // Allow Enter key to trigger certificate generation
+        document.getElementById('certificateId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateCertificate();
+            }
+        });
+        
+        document.getElementById('requestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch(`${API_BASE}/requests`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Blood request created successfully!');
+                    e.target.reset();
+                } else {
+                    showAlert('Error: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('Failed to create request: ' + error.message, 'error');
+            }
+        });
+        
+        // Force reload background image
+        document.addEventListener('DOMContentLoaded', function() {
+            const timestamp = new Date().getTime();
+            const body = document.body;
+            body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('background.jpg?v=${timestamp}')`;
+            body.style.backgroundSize = 'cover';
+            body.style.backgroundPosition = 'center';
+            body.style.backgroundRepeat = 'no-repeat';
+            body.style.backgroundAttachment = 'fixed';
+        });
+        
+    </script>
+</body>
+</html>

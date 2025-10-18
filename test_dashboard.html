@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dashboard - RAKT DHARA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>🔍 User Dashboard Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: API Connection</h2>
+        <div id="apiTest">Testing...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: User Profile Data</h2>
+        <div id="userTest">Testing...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 3: Login Test</h2>
+        <div id="loginTest">Testing...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 4: Dashboard Access</h2>
+        <div id="dashboardTest">Testing...</div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:5000/api';
+        
+        // Test 1: API Connection
+        async function testAPI() {
+            try {
+                const response = await fetch(`${API_BASE}/dashboard/stats`);
+                const data = await response.json();
+                document.getElementById('apiTest').innerHTML = 
+                    `<span class="success">✅ API Connection: SUCCESS</span><br>
+                     Response: ${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('apiTest').innerHTML = 
+                    `<span class="error">❌ API Connection: FAILED</span><br>
+                     Error: ${error.message}`;
+            }
+        }
+        
+        // Test 2: User Profile
+        async function testUserProfile() {
+            try {
+                const response = await fetch(`${API_BASE}/users/48`);
+                const data = await response.json();
+                document.getElementById('userTest').innerHTML = 
+                    `<span class="success">✅ User Profile: SUCCESS</span><br>
+                     User: ${data.user.name} (${data.user.email})<br>
+                     Blood Type: ${data.user.blood_type}<br>
+                     Donations: ${data.user.donation_count}`;
+            } catch (error) {
+                document.getElementById('userTest').innerHTML = 
+                    `<span class="error">❌ User Profile: FAILED</span><br>
+                     Error: ${error.message}`;
+            }
+        }
+        
+        // Test 3: Login
+        async function testLogin() {
+            try {
+                const response = await fetch(`${API_BASE}/user/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: 'jimmy@bloodbank.com',
+                        password: 'jimmy123'
+                    })
+                });
+                const data = await response.json();
+                document.getElementById('loginTest').innerHTML = 
+                    `<span class="success">✅ Login: SUCCESS</span><br>
+                     User ID: ${data.user.id}<br>
+                     Name: ${data.user.name}`;
+            } catch (error) {
+                document.getElementById('loginTest').innerHTML = 
+                    `<span class="error">❌ Login: FAILED</span><br>
+                     Error: ${error.message}`;
+            }
+        }
+        
+        // Test 4: Dashboard Access
+        async function testDashboard() {
+            try {
+                const response = await fetch('/user-dashboard?id=48');
+                if (response.ok) {
+                    document.getElementById('dashboardTest').innerHTML = 
+                        `<span class="success">✅ Dashboard Access: SUCCESS</span><br>
+                         Status: ${response.status} ${response.statusText}`;
+                } else {
+                    document.getElementById('dashboardTest').innerHTML = 
+                        `<span class="error">❌ Dashboard Access: FAILED</span><br>
+                         Status: ${response.status} ${response.statusText}`;
+                }
+            } catch (error) {
+                document.getElementById('dashboardTest').innerHTML = 
+                    `<span class="error">❌ Dashboard Access: FAILED</span><br>
+                     Error: ${error.message}`;
+            }
+        }
+        
+        // Run all tests
+        document.addEventListener('DOMContentLoaded', function() {
+            testAPI();
+            testUserProfile();
+            testLogin();
+            testDashboard();
+        });
+    </script>
+</body>
+</html>
